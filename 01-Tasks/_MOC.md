@@ -15,17 +15,23 @@ last_updated: 1405-06-15
 ```
 [task-00: setup] ✅
        ↓
-[task-01: scrape-list] ⬜
+[task-01: scrape-list 6y] ⬜
        ↓
 [task-02: scrape-detail] ⬜
        ↓
-[task-03: etl-normalize] ⬜
+[task-03: etl-normalize 6y] ⬜
        ↓
-   ┌────────────┴────────────┐
-   ↓                          ↓
-[task-04: by-country]    [task-05: by-tariff]
-   ↓                          ↓
-   └────────────┬─────────────┘
+   ┌────────────┴────────────────────────┐
+   ↓                                       ↓
+[task-04: by-country 6y]            [task-05: by-tariff Top50]
+   ↓                                       ↓
+   └────────────┬──────────────────────────┘
+                ↓
+       [task-10: trend-analysis ALL HS×Country]
+                ↓
+       [task-11: trend-classification]
+                ↓
+       [task-12: export-candidates ranking]
                 ↓
        [task-06: qa-validate]
                 ↓
@@ -45,13 +51,16 @@ last_updated: 1405-06-15
 | Task ID | عنوان | وضعیت | فایل | وابسته به | نقش agent |
 |---------|-------|-------|------|-----------|-----------|
 | `task-00` | راه‌اندازی Vault و قراردادها | ✅ done | [task-00-setup.md](task-00-setup.md) | — | Vault Writer |
-| `task-01` | استخراج فهرست صادرات (۵ سال) | ⬜ pending | [task-01-scrape-list.md](task-01-scrape-list.md) | `task-00` | Scraper |
+| `task-01` | استخراج فهرست صادرات (۶ سال) | ⬜ pending | [task-01-scrape-list.md](task-01-scrape-list.md) | `task-00` | Scraper |
 | `task-02` | استخراج جزئیات هر رکورد | ⬜ pending | [task-02-scrape-detail.md](task-02-scrape-detail.md) | `task-01` | Scraper |
-| `task-03` | نرمال‌سازی و ETL | ⬜ pending | [task-03-etl-normalize.md](task-03-etl-normalize.md) | `task-02` | ETL Engineer |
-| `task-04` | تحلیل به تفکیک کشور | ⬜ pending | [task-04-analysis-country.md](task-04-analysis-country.md) | `task-03` | Analyst |
-| `task-05` | تحلیل به تفکیک تعرفه | ⬜ pending | [task-05-analysis-tariff.md](task-05-analysis-tariff.md) | `task-03` | Analyst |
-| `task-06` | اعتبارسنجی دقت < 0.0001٪ | ⬜ pending | [task-06-qa-validate.md](task-06-qa-validate.md) | `task-04,05` | QA Validator |
-| `task-07` | خروجی Excel | ⬜ pending | [task-07-export-excel.md](task-07-export-excel.md) | `task-06` | ETL Engineer |
+| `task-03` | نرمال‌سازی و ETL (۶ سال) | ⬜ pending | [task-03-etl-normalize.md](task-03-etl-normalize.md) | `task-02` | ETL Engineer |
+| `task-04` | تحلیل به تفکیک کشور (۶ سال) | ⬜ pending | [task-04-analysis-country.md](task-04-analysis-country.md) | `task-03` | Analyst |
+| `task-05` | تحلیل به تفکیک تعرفه (Top 50) | ⬜ pending | [task-05-analysis-tariff.md](task-05-analysis-tariff.md) | `task-03` | Analyst |
+| **`task-10`** | **تحلیل جامع روند (تمام HS × تمام کشورها)** | ⬜ pending | [task-10-trend-analysis.md](task-10-trend-analysis.md) | `task-03`, `task-04`, `task-05` | Analyst |
+| **`task-11`** | **طبقه‌بندی روند + اعتبارسنجی آماری** | ⬜ pending | [task-11-trend-classification.md](task-11-trend-classification.md) | `task-10` | Analyst |
+| **`task-12`** | **رتبه‌بندی کاندیدهای صادرات** | ⬜ pending | [task-12-export-candidates.md](task-12-export-candidates.md) | `task-11` | Analyst |
+| `task-06` | اعتبارسنجی دقت < 0.0001٪ | ⬜ pending | [task-06-qa-validate.md](task-06-qa-validate.md) | `task-10,11,12` | QA Validator |
+| `task-07` | خروجی Excel (۱۸ شیت) | ⬜ pending | [task-07-export-excel.md](task-07-export-excel.md) | `task-06` | ETL Engineer |
 | `task-08` | خروجی Obsidian notes | ⬜ pending | [task-08-export-obsidian.md](task-08-export-obsidian.md) | `task-06` | Vault Writer |
 | `task-09` | انتشار در GitHub | ⬜ pending | [task-09-publish-github.md](task-09-publish-github.md) | `task-07,08` | Git Publisher |
 
@@ -63,6 +72,17 @@ last_updated: 1405-06-15
 
 تسک‌های ۴ و ۵ می‌توانند به‌صورت **موازی** اجرا شوند (هر دو وابسته فقط به `task-03` هستند).
 تسک‌های ۷ و ۸ نیز موازی هستند.
+
+---
+
+## توالی تسک‌های ۱۰، ۱۱، ۱۲ (تحلیل روند)
+
+این سه تسک **قلب اصلی** پروژه‌اند:
+- `task-10`: محاسبه شاخص‌های روند برای **تمام** جفت‌های (HS × Country) در ۶ سال.
+- `task-11`: طبقه‌بندی هر جفت به یکی از ۷ دسته (strong_growth, moderate_growth, stable, volatile, declining, emerging, disappearing).
+- `task-12`: رتبه‌بندی محصولات کاندید صادرات با نمره ترکیبی (CAGR + slope + حجم + تنوع + ثبات - نوسان).
+
+این تسک‌ها به‌صورت سری اجرا می‌شوند (هر کدام به قبلی وابسته‌است).
 
 ---
 
@@ -94,3 +114,4 @@ last_updated: 1405-06-15
 - [/03-Recipes/_MOC](../03-Recipes/_MOC.md)
 - [/04-State/STATUS](../04-State/STATUS.md)
 - [/00-Overview/project-overview](../00-Overview/project-overview.md)
+- [/00-Overview/conventions](../00-Overview/conventions.md) — بخش ۵ (تاکسونومی روند) و ۵.۳ (نمره‌دهی)

@@ -95,4 +95,40 @@ last_updated: 1405-06-15 12:00
 
 ---
 
+## [1405-06-15 14:00] task-00 (ادامه) — vault-writer
+- کاربر درخواست گسترش پروژه داد:
+  - بازه از ۵ سال به **۶ سال** (۱۴۰۰ تا ۱۴۰۵، سال جاری partial).
+  - **حلقه کامل** روی تمام HS Codeها × تمام کشورها (نه فقط Top 50).
+  - طبقه‌بندی روند ۶ ساله به ۷ دسته.
+  - رتبه‌بندی محصولات کاندید صادرات.
+- به‌روزرسانی‌ها:
+  - `00-Overview/project-overview.md`: ۶ سال، تمام HS Codeها، اضافه شدن تحلیل روند و کاندیدها.
+  - `00-Overview/conventions.md`: بخش ۵ جدید با تاکسونومی ۷ دسته‌ای، شاخص‌های آماری، نمره‌دهی export_score. شماره‌گذاری بخش‌های ۵ تا ۹ به‌روز شد.
+  - `00-Overview/glossary.md`: اصطلاحات جدید (Mann-Kendall, OLS, R², CV, YTD, Trend, Volatility).
+  - `00-Overview/data-sources.md`: نکته سال partial ۱۴۰۵.
+  - `01-Tasks/task-01-scrape-list.md`: ۶ سال، با مرحله ۴.۵ برای استخراج partial ۱۴۰۵.
+  - `01-Tasks/task-03-etl-normalize.md`: ۶ سال، فایل `_dataset-metadata.json`.
+  - `01-Tasks/task-04-analysis-country.md`: شاخص‌های ۶ ساله (cagr_5y، cagr_6y).
+  - `01-Tasks/task-05-analysis-tariff.md`: ۶ سال، لینک به task-10 برای تحلیل کامل.
+  - `01-Tasks/task-06-qa-validate.md`: وابستگی به task-10/11/12، تست‌های جدید.
+  - `01-Tasks/task-07-export-excel.md`: ۱۸ شیت (۶ شیت جدید برای trend/classification/candidates).
+  - `01-Tasks/task-09-publish-github.md`: تسک‌های ۰۰ تا ۱۲.
+  - **`01-Tasks/task-10-trend-analysis.md`**: جدید — حلقه کامل تحلیل روند.
+  - **`01-Tasks/task-11-trend-classification.md`**: جدید — طبقه‌بندی ۷ دسته.
+  - **`01-Tasks/task-12-export-candidates.md`**: جدید — رتبه‌بندی کاندیدها.
+  - `01-Tasks/_MOC.md`: نمودار وابستگی جدید با task-10/11/12.
+  - `02-Prompts/prompt-scraper.md`: ۶ سال.
+  - `02-Prompts/prompt-analyst.md`: اهداف task-10/11/12، شاخص‌های آماری، الگوریتم Mann-Kendall، تابع classify_trend و compute_export_score.
+  - `03-Recipes/recipe-01-scrape-customs.md`: مرحله ۴.۵ برای ۱۴۰۵ partial.
+  - `03-Recipes/recipe-03-run-analysis.md`: بخش‌های C، D، E برای task-10/11/12.
+  - **`03-Recipes/recipe-09-trend-classification.md`**: جدید — متدولوژی کامل طبقه‌بندی و رتبه‌بندی.
+  - `03-Recipes/_MOC.md`: اضافه شدن recipe-09.
+  - `04-State/decisions.md`: تصمیم‌های ۰۰۷ تا ۰۱۰ (full-loop، taxonomy، weights، thresholds).
+  - `04-State/STATUS.md`: به‌روزرسانی کامل با تسک‌های جدید.
+- commit و push انجام شد.
+- ✅ **به‌روزرسانی Vault تکمیل شد.**
+- آماده برای شروع `task-01` پس از تأیید URL توسط کاربر.
+
+---
+
 > **قدم بعدی**: Scraper agent باید `task-01` را شروع کند (پس از تأیید URL گمرک در `decisions.md`).

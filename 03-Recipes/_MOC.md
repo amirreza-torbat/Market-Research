@@ -14,14 +14,15 @@ last_updated: 1405-06-15
 
 | ID | عنوان | نقش مرتبط | فایل |
 |----|-------|-----------|------|
-| `recipe-01` | استخراج داده از گمرک | Scraper | [recipe-01-scrape-customs.md](recipe-01-scrape-customs.md) |
+| `recipe-01` | استخراج داده از گمرک (۶ سال) | Scraper | [recipe-01-scrape-customs.md](recipe-01-scrape-customs.md) |
 | `recipe-02` | نرمال‌سازی و ETL | ETL Engineer | [recipe-02-normalize-data.md](recipe-02-normalize-data.md) |
-| `recipe-03` | اجرای تحلیل (کشور و تعرفه) | Analyst | [recipe-03-run-analysis.md](recipe-03-run-analysis.md) |
+| `recipe-03` | اجرای تحلیل (کشور + تعرفه + روند + کاندیدها) | Analyst | [recipe-03-run-analysis.md](recipe-03-run-analysis.md) |
 | `recipe-04` | چک‌لیست QA | QA Validator | [recipe-04-qa-checklist.md](recipe-04-qa-checklist.md) |
 | `recipe-05` | ساخت فایل Excel | ETL Engineer | [recipe-05-export-excel.md](recipe-05-export-excel.md) |
 | `recipe-06` | نوشتن یادداشت Obsidian | Vault Writer | [recipe-06-write-obsidian-notes.md](recipe-06-write-obsidian-notes.md) |
 | `recipe-07` | انتشار در GitHub | Git Publisher | [recipe-07-publish-github.md](recipe-07-publish-github.md) |
 | `recipe-08` | به‌روزرسانی وضعیت (state) | همه | [recipe-08-update-state.md](recipe-08-update-state.md) |
+| **`recipe-09`** | **متدولوژی طبقه‌بندی روند و رتبه‌بندی کاندیدها** | Analyst | [recipe-09-trend-classification.md](recipe-09-trend-classification.md) |
 
 ---
 

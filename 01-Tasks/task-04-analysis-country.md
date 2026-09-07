@@ -1,7 +1,7 @@
 ---
 type: task
 task_id: task-04
-title: تحلیل به تفکیک کشور
+title: تحلیل به تفکیک کشور (۶ سال)
 status: pending
 assignee: analyst
 created: 1405-06-15
@@ -11,22 +11,26 @@ blocks: [task-06]
 estimated_effort: 1-2 days
 ---
 
-# task-04 — تحلیل به تفکیک کشور
+# task-04 — تحلیل به تفکیک کشور (۶ سال)
 
 ## 🎯 هدف
-شناسایی کشورهایی که صادرات ایران به آن‌ها در بازه ۱۴۰۰ تا ۱۴۰۴ **افزایشی** بوده است.
+شناسایی کشورهایی که صادرات ایران به آن‌ها در بازه ۱۴۰۰ تا ۱۴۰۵ **افزایشی** بوده است.
 
 ## 📋 شرح کار
 
 ### ۱. محاسبه شاخص‌های کلیدی به ازای هر کشور
 برای هر کشور (group by `destination_country_iso2`):
-- `total_value_1400` تا `total_value_1404` (مجموع ارزش صادرات سالانه).
-- `cagr` (نرخ رشد سالانه مرکب): `(value_1404 / value_1400)^(1/4) - 1`.
+- `total_value_1400` تا `total_value_1404` (مجموع ارزش صادرات سالانه کامل).
+- `total_value_1405_ytd` (جمع YTD سال جاری).
+- `total_value_1405_annualized` (تخمین سالانه ۱۴۰۵).
+- `cagr_5y` (نرخ رشد سالانه مرکب): `(value_1404 / value_1400)^(1/4) - 1`.
+- `cagr_6y`: `(value_1405_annualized / value_1400)^(1/5) - 1`.
 - `absolute_change`: `value_1404 - value_1400`.
 - `percent_change`: `(value_1404 - value_1400) / value_1400 * 100`.
-- `is_increasing`: اگر `cagr > 0` و `value_1404 > value_1400` → True.
+- `is_increasing`: اگر `cagr_5y > 0` و `value_1404 > value_1400` → True.
 - `is_significant`: اگر `total_value_1404 > 1,000,000 USD` (آستانه ۱ میلیون دلار).
-- `trend_consistency`: در چند سال از ۴ سال متوالی رشد داشته است؟
+- `trend_consistency`: در چند سال از ۵ سال متوالی رشد داشته است؟
+- `slope`, `r_squared`, `mk_p_value`, `cv` (شاخص‌های آماری طبق [[conventions]]).
 
 ### ۲. رتبه‌بندی
 - Top 20 کشور با بیشترین رشد مطلق (`absolute_change`).

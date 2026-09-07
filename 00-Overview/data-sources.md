@@ -34,17 +34,19 @@ status: needs-confirmation
 
 | فیلد (انگلیسی) | نام فارسی | نوع | مثال |
 |----------------|-----------|-----|-------|
-| `year` | سال شمسی | int | 1404 |
-| `month` | ماه شمسی | int (1-12) | 7 |
+| `year` | سال شمسی | int | 1405 |
+| `month` | ماه شمسی | int (1-12) | 6 |
 | `hs_code` | کد تعرفه | string | `"27.09.00.00"` |
 | `hs_code_2` | کد ۲ رقمی | string | `"27"` |
 | `hs_code_4` | کد ۴ رقمی | string | `"2709"` |
-| `hs_description` | شرح کالا | string | `"نفخ خام"` |
+| `hs_description` | شرح کالا | string | `"نفت خام"` |
 | `destination_country_iso2` | کد کشور مقصد | string | `"IQ"` |
 | `destination_country_fa` | نام کشور مقصد | string | `"عراق"` |
 | `export_value_usd` | ارزش دلاری | decimal | 1234567.89 |
 | `export_weight_kg` | وزن کیلوگرمی | decimal | 9876543.21 |
 | `export_quantity` | تعداد | int | 1000 |
+
+> **نکته سال ۱۴۰۵**: داده سال جاری فقط تا آخرین ماه موجود است. باید فیلد `is_partial` یا `months_available` در سطح سال ذخیره شود تا تحلیل‌ها بتوانند این موضوع را لحاظ کنند.
 
 ---
 

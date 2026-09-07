@@ -14,7 +14,7 @@ estimated_effort: 2-3 days
 # task-03 — نرمال‌سازی و ETL
 
 ## 🎯 هدف
-تبدیل داده خام به مدل داده‌ای تحلیلی تمیز، یکپارچه و قابل پرس‌وجو. خروجی این تسک مبنای همه تحلیل‌های بعدی است.
+تبدیل داده خام به مدل داده‌ای تحلیلی تمیز، یکپارچه و قابل پرس‌وجو. خروجی این تسک مبنای همه تحلیل‌های بعدی است. شامل ۶ سال (۱۴۰۰ تا ۱۴۰۵) با سال ۱۴۰۵ به‌صورت partial.
 
 ## 📋 شرح کار
 
@@ -28,9 +28,13 @@ estimated_effort: 2-3 days
 - تبدیل واحد پول به USD (در صورت نیاز، با نرخ روز از `exchange-rates.csv`).
 
 ### ۲. ادغام (Merge)
-- concat همه سال‌ها به یک DataFrame واحد.
+- concat همه سال‌ها (۱۴۰۰ تا ۱۴۰۵) به یک DataFrame واحد.
 - اضافه کردن فیلد `year` و `month` (اگر نبود).
-- ذخیره به فرمت **Parquet** (با `pyarrow`) در `05-Data/processed/exports_1400-1404.parquet`.
+- ذخیره به فرمت **Parquet** (با `pyarrow`) در `05-Data/processed/exports_1400-1405.parquet`.
+- ذخیره فایل metadata در `05-Data/processed/_dataset-metadata.json` شامل:
+  - `years_included`: `[1400, 1401, 1402, 1403, 1404, 1405]`
+  - `months_available_per_year`: `{1400: 12, ..., 1405: N}` (تعداد ماه‌های موجود هر سال)
+  - `is_partial_year`: `{1405: true}`
 
 ### ۳. اعتبارسنجی (Validate)
 - بررسی null در فیلدهای کلیدی.
@@ -50,15 +54,17 @@ estimated_effort: 2-3 days
 - تست: sum(value) برای هر سال باید با total reported توسط گمرک برابر باشد (با تلورانس < 0.0001٪).
 
 ## ✅ معیارهای پذیرش (Acceptance Criteria)
-- [ ] `05-Data/processed/exports_1400-1404.parquet` ساخته شود.
+- [ ] `05-Data/processed/exports_1400-1405.parquet` ساخته شود.
+- [ ] `05-Data/processed/_dataset-metadata.json` ساخته شود با مشخصات سال‌ها.
 - [ ] هیچ null در فیلدهای کلیدی (`year`, `hs_code`, `destination_country_iso2`, `export_value_usd`) نباشد.
 - [ ] گزارش validation در `05-Data/processed/_validation-report.md`.
-- [ ] تست دقت عددی با تلورانس < 0.0001٪ پاس شود.
+- [ ] تست دقت عددی با تلورانس < 0.0001٪ پاس شود (برای هر سال).
 - [ ] جداول مرجع (`countries.csv`, `hs-codes.csv`, `exchange-rates.csv`) ساخته شوند.
 - [ ] commit با پیام `feat(etl): task-03 normalize and validate exports`.
 
 ## 📦 خروجی‌ها
-- `05-Data/processed/exports_1400-1404.parquet`
+- `05-Data/processed/exports_1400-1405.parquet`
+- `05-Data/processed/_dataset-metadata.json`
 - `05-Data/processed/countries.csv`
 - `05-Data/processed/hs-codes.csv`
 - `05-Data/processed/exchange-rates.csv`

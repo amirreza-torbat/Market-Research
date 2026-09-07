@@ -24,17 +24,33 @@ last_updated: 1405-06-15
 ## اهداف شما
 
 ### در `task-04`:
-1. محاسبه شاخص‌های رشد برای هر کشور.
+1. محاسبه شاخص‌های رشد برای هر کشور (۶ سال).
 2. رتبه‌بندی کشورها.
 3. ساخت ۴۰+ یادداشت Obsidian برای Top کشورها.
 4. ساخت یادداشت خلاصه.
 
 ### در `task-05`:
-1. محاسبه شاخص‌های رشد برای هر (HS Code × Country).
+1. محاسبه شاخص‌های رشد برای هر (HS Code × Country) (۶ سال).
 2. محاسبه شاخص‌های رشد برای هر HS Code (aggregated).
 3. رتبه‌بندی HS Codeها.
-4. ساخت ۵۰+ یادداشت Obsidian برای Top HS Codeها.
+4. ساخت ۵۰+ یادداشت Obsidian برای Top 50 HS Codeها.
 5. ساخت یادداشت خلاصه.
+
+### در `task-10` (مهم‌ترین تسک تحلیلی):
+1. **حلقه کامل** روی **تمام** جفت‌های (HS × Country) در ۶ سال.
+2. محاسبه شاخص‌های آماری: `cagr_5y`, `cagr_6y`, `slope`, `r_squared`, `mk_p_value`, `cv`, `trend_consistency`.
+3. خروجی: `trend-analysis-6y.parquet` با تمام شاخص‌ها.
+
+### در `task-11`:
+1. طبقه‌بندی هر جفت به یکی از ۷ دسته (`strong_growth`, `moderate_growth`, `stable`, `volatile`, `declining`, `emerging`, `disappearing`).
+2. اعتبارسنجی آماری با Mann-Kendall.
+3. خروجی: `trend-classification.parquet` و تجمیع `trend-classification-by-hs.parquet`.
+
+### در `task-12` (هدف نهایی):
+1. محاسبه نمره جذابیت صادرات (`export_score`) برای هر HS Code.
+2. فیلتر و رتبه‌بندی.
+3. تولید گزارش‌های استراتژیک: Top 100 کاندید، کشورهای هدف، ریسک‌ها.
+4. خروجی: `export-candidates-ranked.parquet` و ۵۰+ یادداشت تفصیلی.
 
 ## قوانین سخت‌گیرانه (Hard Rules)
 
@@ -54,13 +70,32 @@ def cagr(start: Decimal, end: Decimal, years: int) -> Decimal:
     return (end / start) ** (Decimal(1) / Decimal(years)) - Decimal(1)
 ```
 
-### ۲. تعریف شاخص‌ها
-- **CAGR**: `(value_1404 / value_1400)^(1/4) - 1` — نرخ رشد سالانه مرکب.
+### ۲. تعریف شاخص‌ها (طبق [[conventions]] بخش ۵.۲)
+- **`cagr_5y`**: `(value_1404 / value_1400)^(1/4) - 1` — نرخ رشد سالانه مرکب (۵ سال کامل).
+- **`cagr_6y`**: `(value_1405_annualized / value_1400)^(1/5) - 1` — شامل سال جاری.
 - **absolute_change**: `value_1404 - value_1400`.
 - **percent_change**: `(value_1404 - value_1400) / value_1400 * 100`.
-- **is_increasing**: `cagr > 0` و `value_1404 > value_1400`.
-- **is_significant**: در `task-04`: `value_1404 > 1,000,000 USD`. در `task-05`: `total_5y > 10,000,000 USD`.
-- **trend_consistency**: در چند سال از ۴ سال متوالی رشد داشته (۰ تا ۴).
+- **growth_multiplier**: `value_1404 / value_1400`.
+- **slope**: از OLS رگرسیون روی ۶ نقطه سالانه.
+- **r_squared**: ضریب تعیین از OLS.
+- **mk_p_value**: p-value از تست Mann-Kendall.
+- **cv**: ضریب تغییرات = std / mean.
+- **trend_consistency**: تعداد سال‌های متوالی با رشد مثبت (۰ تا ۵).
+- **is_increasing**: `cagr_5y > 0` و `value_1404 > value_1400`.
+- **is_significant**: در `task-04`: `value_1404 > 1,000,000 USD`. در `task-05`/`task-10`: `total_5y > 10,000,000 USD`.
+
+### ۲.۱ تاکسونومی روند (طبق [[conventions]] بخش ۵.۱)
+برای `task-11`، هر جفت را به یکی از ۷ دسته طبقه‌بندی کن:
+
+| دسته | کد | معیار |
+|------|----|-------|
+| رشد قوی | `strong_growth` | CAGR > 10٪، MK p < 0.05، slope > 0 |
+| رشد متوسط | `moderate_growth` | 0 < CAGR ≤ 10٪، MK p < 0.1 |
+| پایدار | `stable` | |CAGR| ≤ 2٪، R² < 0.3 |
+| نوسانی | `volatile` | CV > 0.5، R² < 0.3 |
+| کاهشی | `declining` | CAGR < 0، MK p < 0.1 |
+| نوظهور | `emerging` | value_start = 0، value_end > threshold |
+| محوشده | `disappearing` | value_start > threshold، value_end ≈ 0 |
 
 ### ۳. نمودارها
 - **الزامی**: نمودارها با matplotlib ساخته شوند.
@@ -94,61 +129,153 @@ plt.rcParams['axes.unicode_minus'] = False
 ## ساختار کد پیشنهادی
 
 ```python
-# scripts/analyze_by_country.py
+# scripts/analyze_trend.py
 import pandas as pd
+import numpy as np
 import pyarrow.parquet as pq
+from scipy import stats
 from decimal import Decimal, getcontext
 import matplotlib.pyplot as plt
 from pathlib import Path
 
 getcontext().prec = 28
 
-class CountryAnalyzer:
-    def __init__(self):
-        self.df = pq.read_table("05-Data/processed/exports_1400-1404.parquet").to_pandas()
-        self.df["export_value_usd"] = self.df["export_value_usd"].apply(Decimal)
+def mann_kendall_test(values: list[float]) -> tuple[float, float]:
+    """Mann-Kendall trend test. Returns (z, p_value)."""
+    n = len(values)
+    s = 0
+    for i in range(n - 1):
+        for j in range(i + 1, n):
+            s += np.sign(values[j] - values[i])
     
-    def compute_metrics(self) -> pd.DataFrame:
-        pivot = self.df.pivot_table(
-            index="destination_country_iso2",
-            columns="year",
-            values="export_value_usd",
-            aggfunc="sum",
-            fill_value=Decimal(0),
-        )
-        # محاسبه شاخص‌ها
-        pivot["cagr"] = pivot.apply(lambda r: cagr(r[1400], r[1404], 4), axis=1)
-        pivot["absolute_change"] = pivot[1404] - pivot[1400]
-        pivot["percent_change"] = (pivot[1404] - pivot[1400]) / pivot[1400] * 100
-        pivot["is_increasing"] = (pivot["cagr"] > 0) & (pivot[1404] > pivot[1400])
-        pivot["is_significant"] = pivot[1404] > Decimal("1000000")
-        return pivot.reset_index()
+    unique_vals, counts = np.unique(values, return_counts=True)
+    tie_correction = sum(t * (t - 1) * (2 * t + 5) for t in counts if t > 1)
+    var_s = (n * (n - 1) * (2 * n + 5) - tie_correction) / 18
     
-    def top_n(self, df: pd.DataFrame, n: int = 20) -> pd.DataFrame:
-        return df[df["is_significant"]].nlargest(n, "absolute_change")
+    if s > 0:
+        z = (s - 1) / np.sqrt(var_s)
+    elif s < 0:
+        z = (s + 1) / np.sqrt(var_s)
+    else:
+        z = 0.0
     
-    def make_chart(self, country_iso: str, output_path: Path):
-        country_data = self.df[self.df["destination_country_iso2"] == country_iso]
-        yearly = country_data.groupby("year")["export_value_usd"].sum()
-        fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
-        ax.plot(yearly.index, [float(v) for v in yearly.values], marker="o")
-        ax.set_title(f"روند صادرات ایران به {country_iso} (۱۴۰۰-۱۴۰۴)")
-        ax.set_xlabel("سال شمسی")
-        ax.set_ylabel("ارزش صادرات (USD)")
-        ax.grid(True, alpha=0.3)
-        fig.savefig(output_path, dpi=150)
-        plt.close(fig)
+    p_value = 2 * (1 - stats.norm.cdf(abs(z)))
+    return z, p_value
+
+
+def compute_trend_metrics(yearly_values: list[Decimal], years: list[int]) -> dict:
+    """
+    yearly_values: [v_1400, v_1401, v_1402, v_1403, v_1404, v_1405_annualized]
+    """
+    vals_float = [float(v) for v in yearly_values]
+    
+    # CAGR 5y (1400-1404)
+    if yearly_values[0] > 0 and yearly_values[4] > 0:
+        cagr_5y = (Decimal(yearly_values[4]) / Decimal(yearly_values[0])) ** \
+                  (Decimal(1) / Decimal(4)) - Decimal(1)
+    else:
+        cagr_5y = None
+    
+    # CAGR 6y (1400-1405 annualized)
+    if yearly_values[0] > 0 and yearly_values[5] > 0:
+        cagr_6y = (Decimal(yearly_values[5]) / Decimal(yearly_values[0])) ** \
+                  (Decimal(1) / Decimal(5)) - Decimal(1)
+    else:
+        cagr_6y = None
+    
+    # OLS regression
+    slope, intercept, r_value, p_value, std_err = stats.linregress(years, vals_float)
+    
+    # Mann-Kendall
+    _, mk_p_value = mann_kendall_test(vals_float)
+    
+    # Coefficient of variation
+    mean_val = float(np.mean(vals_float))
+    std_val = float(np.std(vals_float, ddof=1)) if len(vals_float) > 1 else 0.0
+    cv = std_val / mean_val if mean_val > 0 else None
+    
+    # Trend consistency
+    trend_consistency = sum(1 for i in range(1, len(vals_float)) 
+                           if vals_float[i] > vals_float[i-1])
+    
+    return {
+        "cagr_5y": cagr_5y,
+        "cagr_6y": cagr_6y,
+        "slope": Decimal(str(slope)),
+        "r_squared": Decimal(str(r_value ** 2)),
+        "mk_p_value": Decimal(str(mk_p_value)),
+        "cv": Decimal(str(cv)) if cv is not None else None,
+        "trend_consistency": trend_consistency,
+        "mean_value": Decimal(str(mean_val)),
+    }
+
+
+def classify_trend(row, threshold: Decimal = Decimal("100000")) -> str:
+    """طبقه‌بندی روند طبق conventions بخش ۵.۱."""
+    value_start = row["value_1400"]
+    value_end = row["value_1404"]
+    
+    # نوظهور
+    if value_start == 0 and value_end > threshold:
+        return "emerging"
+    
+    # محوشده
+    if value_start > threshold and value_end < threshold / 10:
+        return "disappearing"
+    
+    if row["cagr_5y"] is None:
+        return "insufficient_data"
+    
+    cagr = row["cagr_5y"]
+    mk_p = row["mk_p_value"]
+    slope = row["slope"]
+    r_sq = row["r_squared"]
+    cv = row["cv"]
+    
+    if cagr > Decimal("0.10") and mk_p < Decimal("0.05") and slope > 0:
+        return "strong_growth"
+    
+    if Decimal(0) < cagr <= Decimal("0.10") and mk_p < Decimal("0.1"):
+        return "moderate_growth"
+    
+    if cagr < 0 and mk_p < Decimal("0.1"):
+        return "declining"
+    
+    if cv is not None and cv > Decimal("0.5") and r_sq < Decimal("0.3"):
+        return "volatile"
+    
+    if abs(cagr) <= Decimal("0.02") and r_sq < Decimal("0.3"):
+        return "stable"
+    
+    if cagr > 0:
+        return "weak_growth"
+    elif cagr < 0:
+        return "weak_decline"
+    else:
+        return "stable"
+
+
+def compute_export_score(row, weights: dict) -> Decimal:
+    """نمره جذابیت صادرات طبق conventions بخش ۵.۳."""
+    return (
+        weights["w1"] * row["norm_cagr_6y"]
+        + weights["w2"] * row["norm_slope"]
+        + weights["w3"] * row["norm_mean_recent_3y"]
+        + weights["w4"] * row["norm_n_destinations"]
+        + weights["w5"] * row["norm_trend_consistency"]
+        - weights["w6"] * row["norm_cv"]
+    )
 ```
 
 ## معیارهای پذیرش (Acceptance)
 
 ### برای `task-04`:
-- [ ] `05-Data/processed/analysis-by-country.csv` ساخته شود.
+- [ ] `05-Data/processed/analysis-by-country.csv` ساخته شود (با ۶ سال).
 - [ ] ۴۰+ یادداشت در `06-Analysis/by-country/`.
 - [ ] نمودار PNG برای هر یادداشت.
 - [ ] `_summary.md` کامل.
 - [ ] تست دقت < 0.0001٪.
-- [ ] commit با پیام `analysis(country): task-04 by-country analysis`.
+- [ ] commit با پیام `analysis(country): task-04 by-country analysis 6y`.
 
 ### برای `task-05`:
 - [ ] `05-Data/processed/analysis-by-tariff-country.csv`.
@@ -156,7 +283,32 @@ class CountryAnalyzer:
 - [ ] ۵۰+ یادداشت در `06-Analysis/by-tariff/`.
 - [ ] `_summary.md` کامل.
 - [ ] تست دقت < 0.0001٪.
-- [ ] commit با پیام `analysis(tariff): task-05 by-tariff analysis`.
+- [ ] commit با پیام `analysis(tariff): task-05 by-tariff analysis 6y`.
+
+### برای `task-10` (حیاتی):
+- [ ] `05-Data/processed/trend-analysis-6y.parquet` ساخته شود.
+- [ ] **تمام** جفت‌های (HS × Country) در فایل موجود باشند.
+- [ ] همه شاخص‌ها (`cagr_5y`, `cagr_6y`, `slope`, `r_squared`, `mk_p_value`, `cv`, `trend_consistency`) محاسبه شده باشند.
+- [ ] `05-Data/processed/trend-analysis-summary.md` کامل شود.
+- [ ] تست دقت: مجموع value_1400..1404 با Parquet برابر باشد (تلورانس < 0.0001٪).
+- [ ] commit با پیام `analysis(trend): task-10 full 6-year trend analysis`.
+
+### برای `task-11`:
+- [ ] `05-Data/processed/trend-classification.parquet` ساخته شود.
+- [ ] `05-Data/processed/trend-classification-by-hs.parquet` ساخته شود.
+- [ ] همه جفت‌ها دسته‌بندی شده باشند (هیچ NULL نباشد).
+- [ ] `06-Analysis/trend/_classification-summary.md` کامل شود.
+- [ ] حداقل ۵۰ یادداشت در `06-Analysis/trend/`.
+- [ ] commit با پیام `analysis(trend): task-11 trend classification`.
+
+### برای `task-12` (هدف نهایی):
+- [ ] `05-Data/processed/export-candidates-ranked.parquet` ساخته شود.
+- [ ] حداقل ۱۰۰ رکورد در آن (پس از فیلتر).
+- [ ] `06-Analysis/export-candidates/_executive-ranking.md` با Top 20.
+- [ ] ۵۰ یادداشت تفصیلی.
+- [ ] `06-Analysis/export-candidates/by-target-country.md` کامل.
+- [ ] `06-Analysis/export-candidates/chapter-country-matrix.md` با نمودار heatmap.
+- [ ] commit با پیام `analysis(ranking): task-12 export candidate ranking`.
 
 ## شروع کار
 
@@ -177,6 +329,10 @@ class CountryAnalyzer:
 
 - [[task-04-analysis-country]]
 - [[task-05-analysis-tariff]]
+- [[task-10-trend-analysis]]
+- [[task-11-trend-classification]]
+- [[task-12-export-candidates]]
 - [[recipe-03-run-analysis]]
-- [[conventions]]
+- [[recipe-09-trend-classification]]
+- [[conventions]] — بخش ۵ (تاکسونومی روند) و ۵.۳ (نمره‌دهی)
 - [[glossary]]
