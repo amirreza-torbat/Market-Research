@@ -36,6 +36,10 @@ env/
 # داده‌های بزرگ (>10MB) — در صورت نیاز به Git LFS
 05-Data/raw/**/*.html
 !05-Data/raw/.gitkeep
+# CSVهای جزئی بزرگ به‌صورت فشرده (.gz) commit می‌شوند (قرارداد §9)؛
+# در صورت regenerate نسخه خام، آن را محلی نگه دارید:
+05-Data/interim/exports_*_raw.csv
+!05-Data/interim/exports_*_raw.csv.gz
 
 # خروجی‌های موقت
 *.tmp

@@ -2,10 +2,10 @@
 type: task
 task_id: task-01
 title: استخراج فهرست صادرات (۶ سال — ۱۴۰۰ تا ۱۴۰۵)
-status: pending
+status: review
 assignee: scraper
 created: 1405-06-15
-updated: 1405-06-15
+updated: 1405-06-16
 depends_on: [task-00]
 blocks: [task-02]
 estimated_effort: 3-4 days
