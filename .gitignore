@@ -1,0 +1,55 @@
+# فایل‌های حساس
+.env
+*.local.md
+secrets.*
+*.secret
+*.key
+
+# فایل‌های سیستمی
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# venv
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# داده‌های بزرگ (>10MB) — در صورت نیاز به Git LFS
+05-Data/raw/**/*.html
+!05-Data/raw/.gitkeep
+
+# خروجی‌های موقت
+*.tmp
+*.bak
+
+# فایل‌های lock
+*.lock
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# Obsidian cache (در صورت استفاده از sync)
+.obsidian/workspace
+.obsidian/workspace.json
+.obsidian/cache

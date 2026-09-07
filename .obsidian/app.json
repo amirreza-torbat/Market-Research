@@ -1,0 +1,11 @@
+{
+  "attachmentFolderPath": "attachments",
+  "spellcheck": false,
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "current",
+  "useMarkdownLinks": false,
+  "showLineNumber": true,
+  "strictLineBreaks": false,
+  "showFrontmatter": true,
+  "showInlineTitle": true
+}

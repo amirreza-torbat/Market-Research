@@ -1,0 +1,71 @@
+---
+type: task
+task_id: task-06
+title: اعتبارسنجی دقت < 0.0001٪
+status: pending
+assignee: qa-validator
+created: 1405-06-15
+updated: 1405-06-15
+depends_on: [task-04, task-05]
+blocks: [task-07, task-08]
+estimated_effort: 1-2 days
+---
+
+# task-06 — اعتبارسنجی دقت و کامل‌بودن
+
+## 🎯 هدف
+تأیید اینکه کل خطای محاسباتی و داده‌ای پروژه زیر 0.0001٪ است و همه معیارهای پذیرش تسک‌های قبلی برآورده شده‌اند. بدون پاس این تسک، خروجی نهایی ساخته نمی‌شود.
+
+## 📋 شرح کار
+
+### ۱. اعتبارسنجی عددی (Numerical QA)
+- مقایسه مجموع `export_value_usd` برای هر سال در `processed/exports_1400-1404.parquet` با:
+  - مجموع در `interim/exports_YYYY_raw.csv` (داده قبل از نرمال‌سازی).
+  - مجموع گزارش‌شده توسط سایت گمرک (در صورت وجود صفحه summary).
+- تلورانس: < 0.0001٪ (یعنی اختلاف < 0.000001 از کل).
+- اگر تلورانس رد شد، ریشه‌یابی در `04-State/issues.md` و رفع.
+
+### ۲. اعتبارسنجی کامل‌بودن (Completeness QA)
+- ۵ سال همه موجود باشند (۱۴۰۰ تا ۱۴۰۴).
+- تعداد کشورها > 100.
+- تعداد HS Codeها > 1000.
+- تعداد رکوردها منطقی (هر سال > 100,000).
+- هیچ null در فیلدهای کلیدی نباشد.
+
+### ۳. اعتبارسنجی تحلیل (Analysis QA)
+- در `task-04`: مجموع value در `analysis-by-country.csv` باید با مجموع کل برابر باشد.
+- در `task-05`: مجموع value در `analysis-by-tariff.csv` باید با مجموع کل برابر باشد.
+- در `task-05`: مجموع value در `analysis-by-tariff-country.csv` باید با مجموع کل برابر باشد.
+- همه تلورانس‌ها < 0.0001٪.
+
+### ۴. اعتبارسنجی متقابل با Mirror Data (در صورت دسترسی)
+- مقایسه صادرات ایران به عراق با واردات عراق از ایران (از UN Comtrade).
+- اختلاف به‌صورت درصد گزارش شود. اختلاف > 10٪ هشدار است (نه لزوماً رد).
+
+### ۵. گزارش QA
+- یک یادداشت `04-State/qa-report.md` شامل:
+  - تمام تست‌های اجراشده.
+  - نتیجه pass/fail هر کدام.
+  - تلورانس مشاهده‌شده.
+  - مسائل باز.
+
+## ✅ معیارهای پذیرش (Acceptance Criteria)
+- [ ] همه تست‌های عددی pass شوند (تلورانس < 0.0001٪).
+- [ ] همه تست‌های کامل‌بودن pass شوند.
+- [ ] همه تست‌های تحلیل pass شوند.
+- [ ] گزارش `04-State/qa-report.md` کامل شود.
+- [ ] اگر تستی fail شد، در `04-State/issues.md` ریشه‌یابی و رفع شود.
+- [ ] commit با پیام `qa: task-06 validation report`.
+
+## 📦 خروجی‌ها
+- `04-State/qa-report.md`
+- (در صورت نیاز) رفع مسائل در تسک‌های قبلی.
+
+## 🔗 پرامپت مرتبط
+- [`02-Prompts/prompt-qa-validator.md`](../02-Prompts/prompt-qa-validator.md)
+- [`03-Recipes/recipe-04-qa-checklist.md`](../03-Recipes/recipe-04-qa-checklist.md)
+
+## 🔗 وابستگی‌ها
+- [[task-04-analysis-country]]
+- [[task-05-analysis-tariff]]
+- بلاک‌کننده [[task-07-export-excel]], [[task-08-export-obsidian]]
