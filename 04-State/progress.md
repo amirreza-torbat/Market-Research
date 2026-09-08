@@ -432,3 +432,34 @@ last_updated: 1405-06-15 12:00
 - months_available_1405 = 0 (منبع داده ۱۴۰۵ منتشر نکرده — Issue-007).
 - QA: پوشش ارزشی جزئیات ≈ ۹۹.۹۳٪، صفر کلید تکراری، جمع سالانه همخوان با آمار رسمی.
 - خروجی‌ها: exports_YYYY_raw.csv + exports_YYYY_aggregate.csv + _summary.md — آماده review.
+
+## [2026-09-08 09:50] task-03 — etl-engineer
+- شروع task-03 — نرمال‌سازی و ETL.
+- شاخه `feature/task-03-etl` ساخته شد (بر پایه `origin/feature/task-01-scrape`).
+- داده خام بررسی شد: ۶۲۶,۳۹۵ رکورد در ۵ سال، ۱۶۶ نام کشور فارسی، ۵۹۹۳ HS Code یکتا.
+- Issue-006 تأیید شد: ۱۴۰۳/۱۴۰۴ ستون month کاملاً خالی (۱۱۱,۱۰۸ رکورد بدون ماه).
+- Issue-007 تأیید شد: export_quantity کاملاً NULL.
+- نگاشت ۱۶۶ نام فارسی کشور به ISO 3166-1 alpha-2 در `05-Data/processed/countries-mapping.csv`.
+  - کدهای user-assigned برای موارد غیرکشوری: XO (سایر خارجی)، ZF (مناطق آزاد)، ZS (مناطق ویژه)، ZZ (نامشخص).
+  - غلط املایی در منبع: "فيليپين" (با پ) اصلاح شد، "ناميبيا" به‌درستی نگاشت شد (NA توسط pandas به NaN تبدیل نمی‌شود با keep_default_na=False).
+
+## [2026-09-08 09:50] task-03 — etl-engineer
+- کلاس `ETLPipeline` در `scripts/etl_normalize.py` پیاده‌سازی شد.
+- متدها: load_raw, clean (dedupe + dropna), normalize_country, normalize_hs_code, convert_to_decimal, normalize_month, validate_precision, save_parquet, build_reference_tables, save_metadata, write_validation_report.
+- Decimal precision = 28، Parquet schema صریح با decimal128 برای مبالغ.
+
+## [2026-09-08 09:50] task-03 — etl-engineer
+- ETL اجرا شد: ۶۲۶,۳۹۵ رکورد پردازش (صفر تکراری، صفر NA حذف).
+- ✅ تست دقت: تلورانس = ۰.۰۰۰۰۰۰۰۰۰۰ برای همه ۵ سال (دقت ۱۰۰٪، فراتر از آستانه ۰.۰۰۰۱٪).
+- خروجی‌ها: exports_1400-1405.parquet (۱۵MB)، countries-mapping.csv، countries.csv، hs-codes.csv، _dataset-metadata.json، _validation-report.md.
+
+## [2026-09-08 09:50] task-03 — etl-engineer (نهایی)
+- ✅ اسکریپت تست مستقل `scripts/test_precision.py` نوشته و اجرا شد:
+  - ۵/۵ سال PASS دقت (تلورانس = ۰)
+  - صفر NULL در فیلدهای کلیدی (year, month, hs_code, country_iso2, value)
+  - ۱۶۶ کشور (>۱۰۰)، ۵۹۹۳ HS Code (>۱۰۰۰)
+  - Issue-006 به‌درستی مدیریت شد (۱۱۱,۱۰۸ رکورد بدون ماه فقط در ۱۴۰۳/۱۴۰۴)
+  - همه HS Codeها در فرمت HH.HH.HH.HH
+- آمار نهایی: sum_value_usd = ۲۵۳,۲۹۲,۹۴۰,۰۳۵ دلار | sum_weight = ۶۶۲,۸۰۱,۹۱۵,۹۹۴ کیلوگرم.
+- Issues مستندسازی‌شده در metadata: ۰۰۵، ۰۰۶، ۰۰۷، ۰۰۸.
+- آماده review.

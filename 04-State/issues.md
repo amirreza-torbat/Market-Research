@@ -98,6 +98,29 @@ last_updated: 1405-06-15 12:00
 
 ---
 
+## Issue-008 — [2026-09-08] task-03
+**عنوان**: مدیریت Issues 006/007/008 در ETL (همه address شد).
+**وضعیت**: 🟢 resolved در task-03
+**توضیح**: ETL Engineer تمام سه issue (006/007/008) را در Parquet نهایی مستندسازی کرد:
+- Issue-006 (فقدان ماه در ۱۴۰۳/۱۴۰۴): برای ۱۱۱,۱۰۸ رکورد در ۱۴۰۳/۱۴۰۴ مقدار `month=0` و `is_monthly=False` تنظیم شد. این به analyst اطلاع می‌دهد که تحلیل ماهانه فقط روی ۱۴۰۰-۱۴۰۲ اجرا شود.
+- Issue-007 (فقدان export_quantity): فیلد از اسکیمای Parquet حذف شد (هیچ داده‌ای نداشت).
+- Issue-008 (نبود داده ۱۴۰۵): در Parquet نیست، در `_dataset-metadata.json` با `is_partial_year["1405"]="no_data"` ثبت شد.
+**اقدام**: برای افزودن ۱۴۰۵ در آینده، وقتی منبع داده را منتشر کرد: `python scripts/scrape_customs.py detail --years 1405 && python scripts/etl_normalize.py`.
+**assignee**: etl-engineer → analyst (اطلاع‌رسانی)
+**اولویت**: 🟢 پایین
+
+---
+
+## Issue-ETL-001 — [2026-09-08] task-03
+**عنوان**: تله‌یابی pandas با مقادیر NA.
+**وضعیت**: 🟢 resolved
+**توضیح**: هنگام خواندن `countries-mapping.csv` با pandas، مقدار `NA` (کد Namibia) به‌صورت پیش‌فرض به NaN تفسیر می‌شد که باعث نگاشت‌نشده شدن "ناميبيا" می‌شد.
+**راهکار**: استفاده از `keep_default_na=False, na_values=[]` در `pd.read_csv` برای حفظ مقادیر رشته‌ای "NA".
+**assignee**: etl-engineer
+**اولویت**: 🟢 پایین
+
+---
+
 ## قالب ثبت issue جدید
 
 ```markdown
@@ -119,7 +142,9 @@ last_updated: 1405-06-15 12:00
 | 001 | توکن GitHub در معرض | 🔴 open | 🔴 بالا |
 | 002 | URL گمرک نامشخص | 🟢 resolved (Decision-011) | 🔴 بحرانی |
 | 003 | captcha/rate-limit | 🟢 رخ نداد در عمل — robots.txt مجاز | 🟡 متوسط |
-| 004 | نگاشت کشورهای فارسی | 🟡 anticipated | 🟡 متوسط |
+| 004 | نگاشت کشورهای فارسی | 🟢 resolved در task-03 | 🟡 متوسط |
 | 005 | tsd.irica.ir از خارج ایران قابل دسترسی نیست | 🟢 resolved (Decision-011) | 🔴 بالا |
-| 006 | فقدان صفت ماه در ۱۴۰۳/۱۴۰۴ منبع | 🟡 open | 🟡 متوسط |
-| 007 | فقدان داده ۱۴۰۵ در منبع | 🔴 open | 🟡 متوسط |
+| 006 | فقدان صفت ماه در ۱۴۰۳/۱۴۰۴ منبع | 🟢 addressed در task-03 (month=0 + is_monthly=False) | 🟡 متوسط |
+| 007 | فقدان داده ۱۴۰۵ در منبع | 🟢 documented در task-03 metadata | 🟡 متوسط |
+| 008 | مدیریت Issues 006/007/008 در ETL | 🟢 resolved در task-03 | 🟢 پایین |
+| ETL-001 | تله‌یابی pandas با NA | 🟢 resolved | 🟢 پایین |

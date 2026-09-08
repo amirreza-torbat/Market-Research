@@ -2,10 +2,10 @@
 type: task
 task_id: task-03
 title: نرمال‌سازی و ETL
-status: pending
+status: review
 assignee: etl-engineer
 created: 1405-06-15
-updated: 1405-06-15
+updated: 1405-06-17
 depends_on: [task-02]
 blocks: [task-04, task-05]
 estimated_effort: 2-3 days

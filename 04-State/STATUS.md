@@ -1,7 +1,7 @@
 ---
 folder: 04-State
 type: status
-last_updated: 2026-09-07 16:10 (1405-06-16)
+last_updated: 2026-09-08 09:50 (1405-06-17)
 ---
 
 # 📊 وضعیت پروژه (STATUS)
@@ -12,21 +12,21 @@ last_updated: 2026-09-07 16:10 (1405-06-16)
 
 | فیلد | مقدار |
 |------|-------|
-| **وضعیت کلی** | 🟠 `review` (برای task-01) |
-| **تسک فعلی** | `task-01` تکمیل شد — منتظر review کاربر |
-| **agent مسئول فعلی** | `scraper` (کار تمام) → قدم بعد با `etl-engineer` (task-03) |
-| **آخرین به‌روزرسانی** | 1405-06-16 (2026-09-07) 19:25 |
-| **بلوک‌ها** | داده ۱۴۰۵ هنوز در منبع منتشر نشده (Issue-007) — مانع task-02/03 نیست |
-| **قدم بعدی** | review خروجی task-01 → شروع `task-03` (ETL) با داده ۱۴۰۰ تا ۱۴۰۴ |
+| **وضعیت کلی** | 🟠 `review` (برای task-03) |
+| **تسک فعلی** | `task-03` تکمیل شد — منتظر review کاربر |
+| **agent مسئول فعلی** | `etl-engineer` (کار تمام) → قدم بعد با `analyst` (task-04/05) |
+| **آخرین به‌روزرسانی** | 1405-06-17 (2026-09-08) 09:50 |
+| **بلوک‌ها** | داده ۱۴۰۵ هنوز در منبع منتشر نشده (Issue-007/008) — مانع task-04+ نیست |
+| **قدم بعدی** | review خروجی task-03 → شروع `task-04` (by-country) و `task-05` (by-tariff) با Parquet |
 
 ## 📋 وضعیت تسک‌ها
 
 | Task ID | عنوان | وضعیت | Assignee | به‌روزرسانی |
 |---------|-------|-------|----------|--------------|
 | `task-00` | راه‌اندازی Vault | 🟢 `done` | vault-writer | 1405-06-15 |
-| `task-01` | استخراج فهرست صادرات (۶ سال) | 🟠 `review` | scraper | 1405-06-16 |
-| `task-02` | استخراج جزئیات | ⬜ `pending` | — | — |
-| `task-03` | نرمال‌سازی ETL (۶ سال) | ⬜ `pending` | — | — |
+| `task-01` | استخراج فهرست صادرات (۶ سال) | 🟢 `done` | scraper | 1405-06-16 |
+| `task-02` | استخراج جزئیات | 🟢 `done` (با task-01) | scraper | 1405-06-16 |
+| `task-03` | نرمال‌سازی ETL (۶ سال) | 🟠 `review` | etl-engineer | 1405-06-17 |
 | `task-04` | تحلیل به تفکیک کشور (۶ سال) | ⬜ `pending` | — | — |
 | `task-05` | تحلیل به تفکیک تعرفه (Top 50) | ⬜ `pending` | — | — |
 | **`task-10`** | **تحلیل جامع روند (تمام HS×تمام کشورها)** | ⬜ `pending` | — | — |
@@ -44,11 +44,9 @@ last_updated: 2026-09-07 16:10 (1405-06-16)
 ```
 [task-00: setup] ✅ DONE
        ↓
-[task-01: scrape-list 6y] ⬜ READY TO START (پس از تأیید URL)
+[task-01/02: scrape 6y] ✅ DONE (626,395 records, 5 years)
        ↓
-[task-02: scrape-detail] ⬜
-       ↓
-[task-03: etl-normalize 6y] ⬜
+[task-03: etl-normalize 6y] 🟠 REVIEW (Parquet + refs ready)
        ↓
    ┌────────────┴────────────────────────┐
    ↓                                       ↓
@@ -72,6 +70,15 @@ last_updated: 2026-09-07 16:10 (1405-06-16)
                 ↓
        [task-09: publish-github]
 ```
+
+## 🆕 تغییرات اخیر (۱۴۰۵-۰۶-۱۷ — task-03 توسط etl-engineer)
+
+1. **ETL کامل شد**: ۶۲۶,۳۹۵ رکورد از ۵ سال (۱۴۰۰-۱۴۰۴) به یک Parquet واحد نرمال شد (`05-Data/processed/exports_1400-1405.parquet`, ۱۵MB).
+2. **دقت عددی ۱۰۰٪**: تلورانس = ۰.۰۰۰۰۰۰۰۰۰۰ برای همه ۵ سال (آستانه: ۰.۰۰۰۱٪) — تست مستقل در `scripts/test_precision.py`.
+3. **نگاشت ۱۶۶ کشور**: همه نام‌های فارسی به ISO 3166-1 alpha-2 نگاشت شد در `05-Data/processed/countries-mapping.csv`. کدهای user-assigned برای موارد غیراستاندارد: XO (سایر خارجی)، ZF (مناطق آزاد)، ZS (مناطق ویژه)، ZZ (نامشخص).
+4. **۵۹۹۳ HS Code** در فرمت HH.HH.HH.HH، با مشتقات hs_code_2/4/6/8.
+5. **Issues مستندسازی شد**: 005 (منبع جایگزین)، 006 (۱۴۰۳/۱۴۰۴ بدون ماه → month=0 + is_monthly=False)، 007 (export_quantity حذف شد)، 008 (۱۴۰۵ در Parquet نیست).
+6. **خروجی‌ها**: exports_1400-1405.parquet, _dataset-metadata.json, countries-mapping.csv, countries.csv, hs-codes.csv, _validation-report.md.
 
 ## 🆕 تغییرات اخیر (۱۴۰۵-۰۶-۱۵ ۱۴:۰۰)
 
@@ -115,14 +122,29 @@ last_updated: 2026-09-07 16:10 (1405-06-16)
 - ~~۶ سال استخراج کن~~ → ۱۴۰۰-۱۴۰۴ کامل شد؛ ۱۴۰۵ در منبع خالی است (Issue-007).
 - ادامه کار: پس از انتشار داده ۱۴۰۵ در منبع: `python scripts/scrape_customs.py detail --years 1405`
 
-### برای ETL Engineer (task-03):
-- ۶ سال رو در Parquet ذخیره کن.
-- فایل `_dataset-metadata.json` با `months_available_1405` بساز.
+### برای ETL Engineer (task-03) — ✅ انجام شد:
+- ✅ ۶ سال (به‌جز ۱۴۰۵ که در منبع نیست) در Parquet ذخیره شد.
+- ✅ فایل `_dataset-metadata.json` با `months_available_per_year` و `issues_addressed` ساخته شد.
+- ✅ دقت عددی ۱۰۰٪ تأیید شد (تلورانس = ۰).
+- ✅ جداول مرجع countries.csv و hs-codes.csv ساخته شد.
+- ادامه کار: پس از افزودن داده ۱۴۰۵ (وقتی در منبع منتشر شد)، کافی است `python scripts/scrape_customs.py detail --years 1405 && python scripts/etl_normalize.py` اجرا شود.
 
-### برای Analyst (task-10/11/12):
+### برای Analyst (task-04 / task-05 / task-10 / task-11 / task-12):
+- داده آماده در `05-Data/processed/exports_1400-1405.parquet`.
+- Schema در `_dataset-metadata.json`.
+- **محدودیت مهم (Issue-006)**: تحلیل‌های ماهانه فقط روی ۱۴۰۰-۱۴۰۲ قابل اجراست. برای ۱۴۰۳/۱۴۰۴ فقط تحلیل سالانه.
+- **محدودیت (Issue-008)**: ۱۴۰۵ در داده نیست. CAGR ۵ ساله (۱۴۰۰-۱۴۰۴) حساب شود.
+- `task-04`: تحلیل به تفکیک کشور روی ۱۶۶ کشور (شامل کدهای user-assigned XO/ZF/ZS/ZZ).
+- `task-05`: تحلیل به تفکیک تعرفه روی ۵۹۹۳ HS Code.
 - `task-10`: **حلقه کامل** روی تمام HS × تمام کشورها. هیچ فیلتری اعمال نکن.
 - `task-11`: ۷ دسته روند را با Mann-Kendall تأیید کن.
 - `task-12`: نمره‌دهی با وزن‌های Decision-009.
+- برای خواندن Parquet:
+  ```python
+  import pyarrow.parquet as pq
+  df = pq.read_table('05-Data/processed/exports_1400-1405.parquet').to_pandas()
+  # export_value_usd / export_value_rial / export_weight_kg به‌صورت Decimal
+  ```
 
 ### برای همه agentها:
 - قبل از شروع، این فایل را بخوان.
@@ -138,3 +160,5 @@ last_updated: 2026-09-07 16:10 (1405-06-16)
 - [/00-Overview/project-overview](../00-Overview/project-overview.md)
 - [/00-Overview/conventions](../00-Overview/conventions.md) — بخش ۵ (تاکسونومی روند)
 - [/03-Recipes/recipe-09-trend-classification](../03-Recipes/recipe-09-trend-classification.md) — متدولوژی جدید
+- [/05-Data/processed/_validation-report](../05-Data/processed/_validation-report.md) — گزارش task-03
+- [/05-Data/processed/_dataset-metadata](../05-Data/processed/_dataset-metadata.json) — schema و issues

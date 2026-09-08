@@ -1,0 +1,61 @@
+{
+  "dataset": "iran-exports-1400-1405",
+  "task": "task-03-etl-normalize",
+  "generated_at": "2026-09-08T09:49:52.483125+00:00",
+  "source": {
+    "primary": "https://tsd.irica.ir",
+    "fallback_used": "https://service.tccim.ir",
+    "reason": "tsd.irica.ir unreachable from outside Iran (Issue-005)",
+    "query_endpoint": "stats_TarrifCustomCountryDetail_excel"
+  },
+  "years_included": [
+    1400,
+    1401,
+    1402,
+    1403,
+    1404
+  ],
+  "years_excluded": {
+    "1405": "no data in source (Issue-008)"
+  },
+  "months_available_per_year": {
+    "1400": 12,
+    "1401": 12,
+    "1402": 12,
+    "1403": 0,
+    "1404": 0
+  },
+  "is_partial_year": {
+    "1403": "monthly_data_unavailable",
+    "1404": "monthly_data_unavailable",
+    "1405": "no_data"
+  },
+  "issues_addressed": [
+    "Issue-005: alternative source tccim.ir used (tsd.irica.ir unreachable from outside Iran)",
+    "Issue-006: years 1403/1404 have no monthly breakdown in source → month=0 and is_monthly=False",
+    "Issue-007: export_quantity column was always NULL in source → column dropped from final schema",
+    "Issue-008: year 1405 has no data in source → not included in Parquet, documented in metadata"
+  ],
+  "schema": {
+    "year": "int32 (1400-1404)",
+    "month": "int32 (0 if source had no monthly breakdown, else 1-12)",
+    "is_monthly": "bool (False for 1403/1404, True for 1400-1402)",
+    "hs_code": "string HH.HH.HH.HH (ISO 3166-aligned 8-digit format)",
+    "hs_code_2/4/6/8": "string (sub-codes without dots)",
+    "destination_country_iso2": "ISO 3166-1 alpha-2 (user-assigned codes XO/ZF/ZS/ZZ for non-standard)",
+    "destination_country_fa": "Persian name as in source",
+    "customs_office_fa": "Persian name of customs office",
+    "export_value_usd": "decimal128(20,4) — USD",
+    "export_value_rial": "decimal128(28,4) — Iranian Rial",
+    "export_weight_kg": "decimal128(20,4) — kilograms"
+  },
+  "precision_target": "tolerance < 0.0001% (1e-6)",
+  "precision_engine": "Python decimal.Decimal with precision 28",
+  "files": {
+    "main": "exports_1400-1405.parquet",
+    "countries_mapping": "countries-mapping.csv",
+    "countries_reference": "countries.csv",
+    "hs_codes_reference": "hs-codes.csv",
+    "validation_report": "_validation-report.md"
+  }
+}

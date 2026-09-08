@@ -1,7 +1,7 @@
 ---
 folder: 01-Tasks
 type: moc
-last_updated: 1405-06-15
+last_updated: 1405-06-17
 ---
 
 # 🗺️ MOC تسک‌ها (Tasks Map of Content)
@@ -15,11 +15,9 @@ last_updated: 1405-06-15
 ```
 [task-00: setup] ✅
        ↓
-[task-01: scrape-list 6y] ⬜
+[task-01/02: scrape 6y] ✅ DONE (626,395 records)
        ↓
-[task-02: scrape-detail] ⬜
-       ↓
-[task-03: etl-normalize 6y] ⬜
+[task-03: etl-normalize 6y] 🟠 review (Parquet ready)
        ↓
    ┌────────────┴────────────────────────┐
    ↓                                       ↓
@@ -51,9 +49,9 @@ last_updated: 1405-06-15
 | Task ID | عنوان | وضعیت | فایل | وابسته به | نقش agent |
 |---------|-------|-------|------|-----------|-----------|
 | `task-00` | راه‌اندازی Vault و قراردادها | ✅ done | [task-00-setup.md](task-00-setup.md) | — | Vault Writer |
-| `task-01` | استخراج فهرست صادرات (۶ سال) | ⬜ pending | [task-01-scrape-list.md](task-01-scrape-list.md) | `task-00` | Scraper |
-| `task-02` | استخراج جزئیات هر رکورد | ⬜ pending | [task-02-scrape-detail.md](task-02-scrape-detail.md) | `task-01` | Scraper |
-| `task-03` | نرمال‌سازی و ETL (۶ سال) | ⬜ pending | [task-03-etl-normalize.md](task-03-etl-normalize.md) | `task-02` | ETL Engineer |
+| `task-01` | استخراج فهرست صادرات (۶ سال) | ✅ done | [task-01-scrape-list.md](task-01-scrape-list.md) | `task-00` | Scraper |
+| `task-02` | استخراج جزئیات هر رکورد | ✅ done | [task-02-scrape-detail.md](task-02-scrape-detail.md) | `task-01` | Scraper |
+| `task-03` | نرمال‌سازی و ETL (۶ سال) | 🟠 review | [task-03-etl-normalize.md](task-03-etl-normalize.md) | `task-02` | ETL Engineer |
 | `task-04` | تحلیل به تفکیک کشور (۶ سال) | ⬜ pending | [task-04-analysis-country.md](task-04-analysis-country.md) | `task-03` | Analyst |
 | `task-05` | تحلیل به تفکیک تعرفه (Top 50) | ⬜ pending | [task-05-analysis-tariff.md](task-05-analysis-tariff.md) | `task-03` | Analyst |
 | **`task-10`** | **تحلیل جامع روند (تمام HS × تمام کشورها)** | ⬜ pending | [task-10-trend-analysis.md](task-10-trend-analysis.md) | `task-03`, `task-04`, `task-05` | Analyst |
