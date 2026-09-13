@@ -463,3 +463,9 @@ last_updated: 1405-06-15 12:00
 - آمار نهایی: sum_value_usd = ۲۵۳,۲۹۲,۹۴۰,۰۳۵ دلار | sum_weight = ۶۶۲,۸۰۱,۹۱۵,۹۹۴ کیلوگرم.
 - Issues مستندسازی‌شده در metadata: ۰۰۵، ۰۰۶، ۰۰۷، ۰۰۸.
 - آماده review.
+
+## [2026-09-13 10:05] task-10 — analyst
+- شروع task-10 — تحلیل جامع روند ۵ ساله (تمام HS × تمام کشورها).
+- شاخه `feature/task-10-trend` ساخته شد (بر پایه `origin/feature/task-03-etl`).
+- فایل‌های مرجع مطالعه شد: conventions (بخش ۴.۲.۲/۵/۵.۳)، recipe-09، prompt-analyst، decisions (002/007/008/010)، issues (005-008)، metadata و validation-report.
+- تحلیل روی ۵ سال کامل (۱۴۰۰-۱۴۰۴) طبق Issue-008 — `cagr_6y` همیشه NULL.
