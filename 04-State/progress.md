@@ -1,7 +1,7 @@
 ---
 folder: 04-State
 type: progress-log
-last_updated: 1405-06-15 12:00
+last_updated: 1405-06-22 15:02
 ---
 
 # 📝 لاگ پیشرفت (Progress Log)
@@ -469,3 +469,15 @@ last_updated: 1405-06-15 12:00
 - شاخه `feature/task-10-trend` ساخته شد (بر پایه `origin/feature/task-03-etl`).
 - فایل‌های مرجع مطالعه شد: conventions (بخش ۴.۲.۲/۵/۵.۳)، recipe-09، prompt-analyst، decisions (002/007/008/010)، issues (005-008)، metadata و validation-report.
 - تحلیل روی ۵ سال کامل (۱۴۰۰-۱۴۰۴) طبق Issue-008 — `cagr_6y` همیشه NULL.
+
+## [2026-09-13 15:02] task-10 — analyst (تکمیل)
+- **تکمیل task-10** — تحلیل جامع روند ۵ ساله، حلقه کامل بدون فیلتر.
+- خروجی اصلی: `05-Data/processed/trend-analysis-5y.parquet` — **۵۰,۱۹۶ جفت (HS × Country) × ۲۱ ستون** (۳.۱MB، snappy).
+- اسکریپت: `scripts/analyze_trend_5y.py` — aggregation exact در int64 (واحد 1e-4 USD)؛ CAGR/pct_change/multiplier با Decimal(prec 28)؛ slope/R²/MK(با tie correction)/CV/ثبات vectorized؛ اجرای کل ≈ ۲ ثانیه.
+- آمار کلیدی: ۶۲۶,۳۹۵ رکورد → ۱۲۲,۱۶۲ ردیف سالانه → ۵۰,۱۹۶ جفت؛ ۹,۴۹۶ جفت با هر ۵ سال داده؛ ۱۲,۵۰۷ جفت با CAGR قابل محاسبه (۶,۴۸۵ رشد / ۶,۰۲۰ کاهش / ۲ ثابت).
+- **تست دقت**: تلورانس = ۰.۰۰۰۰۰۰۰۰۰۰ برای جمع هر ۵ سال (هدف < 1e-6) — تست مستقل `scripts/test_trend_precision.py` با ۱۷ بررسی: **همه PASS**.
+- گزارش: `trend-analysis-summary.md` — ۱۰ بخش: متدولوژی، آمار کلی، تست دقت، آمار توصیفی، توزیع CAGR + **هشدار آماری MK با n=5 (حداقل p≈0.0275)**، Top-10 CAGR (با فیلتر v1400≥100K$ طبق D-010)، Top-10 slope، پیش‌نمایش طبقات با برجسته‌ها، نکات کیفی + جغرافیا.
+- پیش‌نمایش طبقات (آستانه‌های Decision-010، غیرانحصاری): strong_growth **۳۴۰** | moderate 20 | stable 535 | volatile 25,283 | declining 904 | emerging **۱,۶۸۶** | disappearing 1,593.
+- اصلاح باگ واحد در حین کار: slope/mean_value/mean_recent_3y ابتدا در واحدهای int64 محاسبه شده بودند → به USD تبدیل شدند و خروجی regenerate شد (cv/r²/MK مقیاس‌ناوابسته بودند و درست ماندند).
+- commit: `fd7c59c` روی شاخه `feature/task-10-trend` + push به origin.
+- آماده review → سپس task-11 (طبقه‌بندی ۷ دسته با اولویت انحصاری).

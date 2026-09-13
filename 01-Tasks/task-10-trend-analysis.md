@@ -2,10 +2,10 @@
 type: task
 task_id: task-10
 title: تحلیل جامع روند ۶ ساله (تمامی HS × تمامی کشورها)
-status: pending
+status: review
 assignee: analyst
 created: 1405-06-15
-updated: 1405-06-15
+updated: 1405-06-22
 depends_on: [task-03]
 blocks: [task-11, task-06]
 estimated_effort: 3-4 days
