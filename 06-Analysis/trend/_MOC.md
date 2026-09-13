@@ -1,13 +1,13 @@
 ---
 folder: 06-Analysis/trend
 type: moc
-last_updated: 1405-06-15
-status: pending
+last_updated: 1405-06-22
+status: review
 ---
 
 # 📈 MOC تحلیل روند (Trend Analysis)
 
-> این پوشه پس از تکمیل [[task-10-trend-analysis]] و [[task-11-trend-classification]] پر می‌شود.
+> این پوشه با تکمیل [[task-11-trend-classification]] پر شد (task-10 خروجی داده Parquet تولید کرد).
 
 ## ساختار مورد انتظار
 
@@ -18,9 +18,19 @@ status: pending
 - `declining/` — یادداشت‌های HS Code کاهشی (Top 30)
 - `charts/` — نمودارهای روند aggregated و heatmap
 
-## فهرست یادداشت‌ها (پس از تکمیل)
+## فهرست یادداشت‌ها (task-11 — ۱۰۸ یادداشت + ۱۰۲ نمودار)
 
-> ⬜ هنوز هیچ یادداشتی ساخته نشده. پس از تکمیل `task-10` و `task-11` این فهرست پر خواهد شد.
+| پوشه | تعداد | محتوا |
+|------|-------|-------|
+| [[_classification-summary]] | — | گزارش خلاصه ۱۲ بخشی |
+| `strong-growth/` | 30 | Top 30 HS با جفت رشد قوی (از ۲۵۴ کاندید) |
+| `moderate-growth/` | 18 | همه HSهای دارای جفت رشد متوسط (کل جفت‌ها فقط ۲۰) |
+| `emerging/` | 30 | Top 30 HS نوظهور (از ۸۷۲ کاندید) |
+| `declining/` | 30 | Top 30 HS کاهشی (از ۵۴۶ کاندید) |
+| `charts/` | 102 | نمودار PNG روند aggregated (یکتا به ازای هر HS) |
+
+> روش انتخاب: **membership** (حداقل یک جفت در دسته) — نه فیلتر dominant_trend.
+> توضیح کامل در [[_classification-summary]] §۱۰.
 
 ## تاکسونومی روند
 

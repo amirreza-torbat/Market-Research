@@ -2,10 +2,10 @@
 type: task
 task_id: task-11
 title: طبقه‌بندی روند و اعتبارسنجی آماری
-status: pending
+status: review
 assignee: analyst
 created: 1405-06-15
-updated: 1405-06-15
+updated: 1405-06-22
 depends_on: [task-10]
 blocks: [task-12, task-06]
 estimated_effort: 1-2 days

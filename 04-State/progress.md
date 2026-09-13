@@ -1,7 +1,7 @@
 ---
 folder: 04-State
 type: progress-log
-last_updated: 1405-06-22 15:02
+last_updated: 1405-06-22 16:20
 ---
 
 # 📝 لاگ پیشرفت (Progress Log)
@@ -481,3 +481,19 @@ last_updated: 1405-06-22 15:02
 - اصلاح باگ واحد در حین کار: slope/mean_value/mean_recent_3y ابتدا در واحدهای int64 محاسبه شده بودند → به USD تبدیل شدند و خروجی regenerate شد (cv/r²/MK مقیاس‌ناوابسته بودند و درست ماندند).
 - commit: `fd7c59c` روی شاخه `feature/task-10-trend` + push به origin.
 - آماده review → سپس task-11 (طبقه‌بندی ۷ دسته با اولویت انحصاری).
+
+## [2026-09-13 16:20] task-11 — analyst (تکمیل)
+- **تکمیل task-11** — طبقه‌بندی روند ۷ دسته + ۳ فرعی + تجمیع HS + یادداشت‌های Top.
+- شاخه `feature/task-11-classification` از `origin/feature/task-10-trend` ساخته شد.
+- اسکریپت‌ها: `scripts/classify_trends.py` (طبقه‌بندی vectorized + تجمیع + اعتبارسنجی + گزارش) و `scripts/build_trend_notes.py` (یادداشت + نمودار).
+- خروجی داده: `trend-classification.parquet` (۵۰,۱۹۶ × ۲۵) و `trend-classification-by-hs.parquet` (۵,۹۹۳ × ۲۶).
+- توزیع دسته‌ها: strong_growth ۳۴۰ | moderate 20 | weak_growth ۳,۷۱۲ | stable ۲۹۶ | volatile ۴,۴۸۳ | declining ۸۱۷ | weak_decline ۲,۶۱۵ | emerging ۱,۶۸۶ | disappearing ۱,۸۱۵ | insufficient_data ۳۴,۴۱۲.
+- توصیه اقدام: select 2,026 | monitor 3,732 | investigate 41,806 | avoid 2,632.
+- اعتبارسنجی: همه PASS — بدون NULL، دسته‌ها معتبر، جمع value_1404 حفظ‌شده (<1e-9 نسبی)، جمع n_countries = 50,196.
+- ۱۰۸ یادداشت Obsidian + ۱۰۲ نمودار یکتا در `06-Analysis/trend/` (30 strong + 18 moderate + 30 emerging + 30 declining؛ ۶ HS در دو دسته هم‌زمان).
+- نمودار فارسی: matplotlib فاقد RTL → arabic_reshaper + python-bidi نصب و استفاده شد (فونت DejaVu Sans).
+- **انحراف مستندشده از پرامپت**: انتخاب یادداشت‌ها با membership (n_<cat> > 0، رتبه‌بندی با ارزش دسته) به‌جای فیلتر dominant_trend — دلیل: ۵,۵۵۸ از ۵,۹۹۳ HS غالب insufficient_data؛ فیلتر پرامپت فقط ۳۷ یادداشت می‌داد (۰ برای moderate). ثبت در `_classification-summary.md` §۱۰.
+- اصلاحات حین کار: باگ nonlocal در ماسک‌های طبقه‌بندی، نام‌گذاری ستون‌های crosstab، برچسب «توصیه» یادداشت‌ها، و کوتاه‌سازی عنوان frontmatter.
+- محیط: venv بازسازی شده بود → pyarrow/matplotlib نصب مجدد شد.
+- commit: `e20658d` + push به `origin/feature/task-11-classification`.
+- آماده review → سپس task-12 (رتبه‌بندی کاندیدها ⭐ — با فیلتر membership طبق §۱۱ گزارش).

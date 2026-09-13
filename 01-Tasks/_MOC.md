@@ -25,9 +25,9 @@ last_updated: 1405-06-17
    ↓                                       ↓
    └────────────┬──────────────────────────┘
                 ↓
-       [task-10: trend-analysis ALL HS×Country]
+       [task-10: trend-analysis ALL HS×Country]  🟠 review
                 ↓
-       [task-11: trend-classification]
+       [task-11: trend-classification]  🟠 review
                 ↓
        [task-12: export-candidates ranking]
                 ↓
@@ -54,8 +54,8 @@ last_updated: 1405-06-17
 | `task-03` | نرمال‌سازی و ETL (۶ سال) | 🟠 review | [task-03-etl-normalize.md](task-03-etl-normalize.md) | `task-02` | ETL Engineer |
 | `task-04` | تحلیل به تفکیک کشور (۶ سال) | ⬜ pending | [task-04-analysis-country.md](task-04-analysis-country.md) | `task-03` | Analyst |
 | `task-05` | تحلیل به تفکیک تعرفه (Top 50) | ⬜ pending | [task-05-analysis-tariff.md](task-05-analysis-tariff.md) | `task-03` | Analyst |
-| **`task-10`** | **تحلیل جامع روند (تمام HS × تمام کشورها)** | ⬜ pending | [task-10-trend-analysis.md](task-10-trend-analysis.md) | `task-03`, `task-04`, `task-05` | Analyst |
-| **`task-11`** | **طبقه‌بندی روند + اعتبارسنجی آماری** | ⬜ pending | [task-11-trend-classification.md](task-11-trend-classification.md) | `task-10` | Analyst |
+| **`task-10`** | **تحلیل جامع روند (تمام HS × تمام کشورها)** | 🟠 review | [task-10-trend-analysis.md](task-10-trend-analysis.md) | `task-03`, `task-04`, `task-05` | Analyst |
+| **`task-11`** | **طبقه‌بندی روند + اعتبارسنجی آماری** | 🟠 review | [task-11-trend-classification.md](task-11-trend-classification.md) | `task-10` | Analyst |
 | **`task-12`** | **رتبه‌بندی کاندیدهای صادرات** | ⬜ pending | [task-12-export-candidates.md](task-12-export-candidates.md) | `task-11` | Analyst |
 | `task-06` | اعتبارسنجی دقت < 0.0001٪ | ⬜ pending | [task-06-qa-validate.md](task-06-qa-validate.md) | `task-10,11,12` | QA Validator |
 | `task-07` | خروجی Excel (۱۸ شیت) | ⬜ pending | [task-07-export-excel.md](task-07-export-excel.md) | `task-06` | ETL Engineer |

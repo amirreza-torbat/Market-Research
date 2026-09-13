@@ -12,12 +12,12 @@ last_updated: 2026-09-13 15:02 (1405-06-22)
 
 | فیلد | مقدار |
 |------|-------|
-| **وضعیت کلی** | 🟡 `in-progress` (task-11 در حال اجرا) |
-| **تسک فعلی** | `task-11` — طبقه‌بندی روند ۷ دسته + اعتبارسنجی آماری |
-| **agent مسئول فعلی** | `analyst` (کار تمام) → قدم بعد با `analyst` (task-11) |
-| **آخرین به‌روزرسانی** | 1405-06-22 (2026-09-13) 16:30 |
+| **وضعیت کلی** | 🟠 `review` (برای task-11) |
+| **تسک فعلی** | `task-11` — طبقه‌بندی روند ۷ دسته + یادداشت‌های Top تکمیل شد — منتظر review کاربر |
+| **agent مسئول فعلی** | `analyst` (کار تمام) → قدم بعد با `analyst` (task-12) |
+| **آخرین به‌روزرسانی** | 1405-06-22 (2026-09-13) 16:20 |
 | **بلوک‌ها** | داده ۱۴۰۵ هنوز در منبع منتشر نشده (Issue-007/008) — تحلیل روی ۵ سال کامل انجام شد |
-| **قدم بعدی** | تکمیل task-11 → review → شروع `task-12` (رتبه‌بندی کاندیدها ⭐) |
+| **قدم بعدی** | review خروجی task-11 → شروع `task-12` (رتبه‌بندی کاندیدها ⭐ هدف نهایی) |
 
 ## 📋 وضعیت تسک‌ها
 
@@ -30,7 +30,7 @@ last_updated: 2026-09-13 15:02 (1405-06-22)
 | `task-04` | تحلیل به تفکیک کشور (۶ سال) | ⬜ `pending` | — | — |
 | `task-05` | تحلیل به تفکیک تعرفه (Top 50) | ⬜ `pending` | — | — |
 | **`task-10`** | **تحلیل جامع روند (تمام HS×تمام کشورها)** | 🟠 `review` | analyst | 1405-06-22 |
-| **`task-11`** | **طبقه‌بندی روند + اعتبارسنجی آماری** | 🟡 `in-progress` | analyst | 1405-06-22 |
+| **`task-11`** | **طبقه‌بندی روند + اعتبارسنجی آماری** | 🟠 `review` | analyst | 1405-06-22 |
 | **`task-12`** | **رتبه‌بندی کاندیدهای صادرات** | ⬜ `pending` | — | — |
 | `task-06` | اعتبارسنجی QA | ⬜ `pending` | — | — |
 | `task-07` | خروجی Excel (۱۸ شیت) | ⬜ `pending` | — | — |
@@ -70,6 +70,16 @@ last_updated: 2026-09-13 15:02 (1405-06-22)
                 ↓
        [task-09: publish-github]
 ```
+
+## 🆕 تغییرات اخیر (۱۴۰۵-۰۶-۲۲ — task-11 توسط analyst)
+
+1. **طبقه‌بندی روند کامل شد**: هر **۵۰,۱۹۶ جفت** (HS × Country) به ۷ دسته اصلی + ۳ فرعی طبق recipe-09 §۵ و آستانه‌های Decision-010 دسته‌بندی شد — بدون هیچ NULL. خروجی: `trend-classification.parquet` (۵۰,۱۹۶ × ۲۵ ستون).
+2. **توزیع**: strong_growth **۳۴۰** | moderate 20 | weak_growth 3,712 | stable 296 | volatile 4,483 | declining **۸۱۷** | weak_decline 2,615 | emerging **۱,۶۸۶** | disappearing 1,815 | insufficient_data 34,412 (۶۸.۶٪ — جفت‌های sparse با CAGR NULL).
+3. **تجمیع به ۵,۹۹۳ HS Code**: `trend-classification-by-hs.parquet` با dominant_trend، شمارش دسته‌ها، growth_diversity_score، cagr_5y_aggregated و n_destinations_active.
+4. **۱۰۸ یادداشت Obsidian + ۱۰۲ نمودار PNG** در `06-Analysis/trend/` (Top 30 strong-growth / 18 moderate / 30 emerging / 30 declining) — نمودارهای فارسی با arabic_reshaper + bidi + DejaVu Sans (matplotlib از RTL shaping پشتیبانی نمی‌کند).
+5. **انحراف مستندشده**: انتخاب یادداشت‌ها با روش membership (`n_<cat> > 0`) به‌جای فیلتر dominant_trend پرامپت — چون ۵,۵۵۸ از ۵,۹۹۳ HS غالب insufficient_data دارند و فیلتر اولیه فقط ۳۷ یادداشت می‌داد. جزئیات در `_classification-summary.md` §۱۰.
+6. **هشدار آماری MK** (n=5 → حداقل p≈0.0275) در گزارش §۴ مستند شد؛ توصیه task-12: فیلتر membership (نه dominant) + is_significant به‌عنوان وزن.
+7. اعتبارسنجی: همه PASS (تعداد ردیف، اعتبار دسته‌ها، حفظ جمع value_1404 < 1e-9 نسبی، جمع n_countries = 50,196).
 
 ## 🆕 تغییرات اخیر (۱۴۰۵-۰۶-۲۲ — task-10 توسط analyst)
 
@@ -138,16 +148,17 @@ last_updated: 2026-09-13 15:02 (1405-06-22)
 - ✅ جداول مرجع countries.csv و hs-codes.csv ساخته شد.
 - ادامه کار: پس از افزودن داده ۱۴۰۵ (وقتی در منبع منتشر شد)، کافی است `python scripts/scrape_customs.py detail --years 1405 && python scripts/etl_normalize.py` اجرا شود.
 
-### برای Analyst (task-04 / task-05 / task-11 / task-12):
+### برای Analyst (task-04 / task-05 / task-12):
 - داده آماده در `05-Data/processed/exports_1400-1405.parquet`.
 - **خروجی task-10 آماده است**: `05-Data/processed/trend-analysis-5y.parquet` (۵۰,۱۹۶ جفت × ۲۱ ستون) + `trend-analysis-summary.md`.
+- **خروجی task-11 آماده است**: `trend-classification.parquet` (۵۰,۱۹۶ × ۲۵) + `trend-classification-by-hs.parquet` (۵,۹۹۳ × ۲۶) + ۱۰۸ یادداشت در `06-Analysis/trend/`.
 - Schema در `_dataset-metadata.json`.
 - **محدودیت مهم (Issue-006)**: تحلیل‌های ماهانه فقط روی ۱۴۰۰-۱۴۰۲ قابل اجراست. برای ۱۴۰۳/۱۴۰۴ فقط تحلیل سالانه.
 - **محدودیت (Issue-008)**: ۱۴۰۵ در داده نیست. CAGR ۵ ساله (۱۴۰۰-۱۴۰۴) حساب شد؛ `cagr_6y` NULL.
 - **هشدار آماری (task-11)**: با n=5 حداقل p-value ممکن در MK ≈ 0.0275 است؛ معیار p<0.05 عملاً یعنی سری کاملاً یکنواخت. MK را در کنار CAGR/R²/ثبات تفسیر کن.
 - `task-04`: تحلیل به تفکیک کشور روی ۱۶۶ کشور (شامل کدهای user-assigned XO/ZF/ZS/ZZ).
 - `task-05`: تحلیل به تفکیک تعرفه روی ۵۹۹۳ HS Code.
-- `task-11`: ۷ دسته روند را با **اولویت انحصاری** (دسته‌ها هم‌اکنون overlap دارند) طبقه‌بندی کن؛ آستانه‌های Decision-010.
+- `task-12`: فیلتر اولیه = **membership** (`n_strong + n_moderate + n_emerging > 0`؛ نه dominant_trend — ۹۲.۷٪ HSها غالب insufficient_data هستند)؛ سپس فیلترهای recipe-09 §۶ (mean_recent_3y > 1M$ و n_destinations_active ≥ 3)؛ نمره‌دهی با وزن‌های Decision-009 و `is_significant` به‌عنوان وزن کمکی.
 - `task-12`: نمره‌دهی با وزن‌های Decision-009.
 - برای خواندن Parquet:
   ```python
