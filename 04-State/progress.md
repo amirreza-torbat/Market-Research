@@ -524,3 +524,14 @@ last_updated: 1405-06-23 12:40
 - **Parquet**: `export-candidates-ranked-recalibrated.parquet` (۵۷۴×۳۴؛ +recommendation_old/+select_threshold/+monitor_threshold)؛ نمره‌ها و رتبه‌ها دست‌نخورده.
 - **QA**: ۶۰/۶۰ بررسی معنایی PASS (بازمحاسبه مستقل شیت کشورها با صفر مغایرت) + validate/audit/scan ساختاری صفر خطا.
 - commit + push به `origin/feature/task-12-recalibrate`.
+
+## [2026-09-14 13:30] task-06 — qa-validator (تکمیل — PASS)
+
+- **اعتبارسنجی نهایی کل pipeline (task-06) تکمیل شد — ۴۹/۴۹ تست PASS، تلورانس عددی ۰.۰۰۰۰۰۰۰۰۰۰٪**.
+- شاخه `feature/task-06-qa` از `origin/feature/task-12-recalibrate` ساخته شد؛ فایل‌های مرجع (conventions §۴.۲، recipe-04، prompt-qa-validator، گزارش‌های task-03/10/11/12) مطالعه شد.
+- اسکریپت `scripts/qa_validate_final.py` (۹ گروه تست، جمع‌ها با Decimal prec 28 — عیناً بدون float): سازگاری عددی raw→processed→trend→classification در هر ۵ سال (۱۵ تست، همه با تلورانس دقیق صفر) + membership candidates (۳) + کامل‌بودن ۵ سال/۱۶۶ کشور/۵,۹۹۳ HS/بدون null (۸) + فرمت HS/ISO/value/weight (۴) + سازگاری تحلیل شامل rank یکتا و توصیه‌های صدکی (۷) + Excel ۷ شیت با شمارش سطرها (۷) + مستندسازی Issues 005-008 در metadata (۵).
+- **یافته ریشه‌یابی‌شده (شفاف)**: تست «>100k رکورد/سال» برای ۱۴۰۳/۱۴۰۴ false positive داد — آستانه recipe-04 قبل از کشف Issue-006 نوشته شده بود؛ این سال‌ها در منبع سطح-سال تجمیع‌اند و کامل‌بودن ارزش‌شان مستقلاً با تلورانس صفر (تست 1.4/1.5؛ ۱۴۰۳ = ۵۷.۷۸B$) تأیید شد → معیار به نسخه Issue-006-aware اصلاح و در Issue-009 ثبت شد. هیچ داده یا کد تسک‌های قبلی تغییر نکرد.
+- خروجی‌ها: `04-State/qa-report.md` (جایگزین placeholder) + `05-Data/processed/qa-validation.json`.
+- State به‌روز شد: STATUS.md (task-06 → review)، این فایل، `01-Tasks/_MOC.md`، `issues.md` (Issue-009)، فایل تسک task-06.
+- commit + push به `origin/feature/task-06-qa`.
+- **نتیجه: گات نهایی قبل از انتشار عبور شد — task-07/08/09 unblocked هستند.**

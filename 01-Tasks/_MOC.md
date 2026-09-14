@@ -1,7 +1,7 @@
 ---
 folder: 01-Tasks
 type: moc
-last_updated: 1405-06-17
+last_updated: 1405-06-23
 ---
 
 # 🗺️ MOC تسک‌ها (Tasks Map of Content)
@@ -31,7 +31,7 @@ last_updated: 1405-06-17
                 ↓
        [task-12: export-candidates ranking]
                 ↓
-       [task-06: qa-validate]
+       [task-06: qa-validate]  🟠 review — ۴۹/۴۹ PASS (1405-06-23)
                 ↓
    ┌────────────┴────────────┐
    ↓                          ↓
@@ -57,7 +57,7 @@ last_updated: 1405-06-17
 | **`task-10`** | **تحلیل جامع روند (تمام HS × تمام کشورها)** | 🟠 review | [task-10-trend-analysis.md](task-10-trend-analysis.md) | `task-03`, `task-04`, `task-05` | Analyst |
 | **`task-11`** | **طبقه‌بندی روند + اعتبارسنجی آماری** | 🟠 review | [task-11-trend-classification.md](task-11-trend-classification.md) | `task-10` | Analyst |
 | **`task-12`** | **رتبه‌بندی کاندیدهای صادرات** | 🟠 review | [task-12-export-candidates.md](task-12-export-candidates.md) | `task-11` | Analyst |
-| `task-06` | اعتبارسنجی دقت < 0.0001٪ | ⬜ pending | [task-06-qa-validate.md](task-06-qa-validate.md) | `task-10,11,12` | QA Validator |
+| `task-06` | اعتبارسنجی دقت < 0.0001٪ | 🟠 review | [task-06-qa-validate.md](task-06-qa-validate.md) | `task-10,11,12` | QA Validator |
 | `task-07` | خروجی Excel (۱۸ شیت) | ⬜ pending | [task-07-export-excel.md](task-07-export-excel.md) | `task-06` | ETL Engineer |
 | `task-08` | خروجی Obsidian notes | ⬜ pending | [task-08-export-obsidian.md](task-08-export-obsidian.md) | `task-06` | Vault Writer |
 | `task-09` | انتشار در GitHub | ⬜ pending | [task-09-publish-github.md](task-09-publish-github.md) | `task-07,08` | Git Publisher |

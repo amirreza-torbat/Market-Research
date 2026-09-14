@@ -1,0 +1,258 @@
+{
+  "test_run_id": "qa-final-20260914-153214",
+  "generated_at": "2026-09-14T15:32:14.271338+00:00",
+  "tolerance_threshold_fraction": 1e-06,
+  "tolerance_observed_max_fraction": 0.0,
+  "tolerance_observed_max_percent": 0.0,
+  "total_tests": 49,
+  "passed": 49,
+  "failed": 0,
+  "overall_pass": true,
+  "results": [
+    {
+      "test": "1.1 Raw→Processed year 1400",
+      "passed": true,
+      "details": "raw=48134744945.00, proc=48134744945.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "1.2 Raw→Processed year 1401",
+      "passed": true,
+      "details": "raw=52958904652.00, proc=52958904652.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "1.3 Raw→Processed year 1402",
+      "passed": true,
+      "details": "raw=49442023650.00, proc=49442023650.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "1.4 Raw→Processed year 1403",
+      "passed": true,
+      "details": "raw=57777447461.00, proc=57777447461.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "1.5 Raw→Processed year 1404",
+      "passed": true,
+      "details": "raw=44979819327.00, proc=44979819327.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "2.1 Processed→Trend year 1400",
+      "passed": true,
+      "details": "proc=48134744945.00, trend=48134744945.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "2.2 Processed→Trend year 1401",
+      "passed": true,
+      "details": "proc=52958904652.00, trend=52958904652.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "2.3 Processed→Trend year 1402",
+      "passed": true,
+      "details": "proc=49442023650.00, trend=49442023650.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "2.4 Processed→Trend year 1403",
+      "passed": true,
+      "details": "proc=57777447461.00, trend=57777447461.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "2.5 Processed→Trend year 1404",
+      "passed": true,
+      "details": "proc=44979819327.00, trend=44979819327.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "3.1 Trend→Classification year 1400",
+      "passed": true,
+      "details": "trend=48134744945.00, class=48134744945.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "3.2 Trend→Classification year 1401",
+      "passed": true,
+      "details": "trend=52958904652.00, class=52958904652.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "3.3 Trend→Classification year 1402",
+      "passed": true,
+      "details": "trend=49442023650.00, class=49442023650.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "3.4 Trend→Classification year 1403",
+      "passed": true,
+      "details": "trend=57777447461.00, class=57777447461.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "3.5 Trend→Classification year 1404",
+      "passed": true,
+      "details": "trend=44979819327.00, class=44979819327.00, tol=0.000000000000 (0.0000000000%)"
+    },
+    {
+      "test": "4.1 Candidates count ≤ Classification count",
+      "passed": true,
+      "details": "classification=5993, candidates=574"
+    },
+    {
+      "test": "4.2 All candidate HS codes in classification",
+      "passed": true,
+      "details": "all 574 HS codes found"
+    },
+    {
+      "test": "4.3 Candidates satisfy membership filter (strong/moderate/emerging > 0)",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "test": "5.1 5 years present (1400-1404)",
+      "passed": true,
+      "details": "years=[1400, 1401, 1402, 1403, 1404], missing=[]"
+    },
+    {
+      "test": "5.2 ≥100 countries",
+      "passed": true,
+      "details": "n_countries=166 (expected 166)"
+    },
+    {
+      "test": "5.3 ≥1000 HS codes",
+      "passed": true,
+      "details": "n_hs=5993 (expected 5993)"
+    },
+    {
+      "test": "5.4 Reasonable record count per year (Issue-006 aware)",
+      "passed": true,
+      "details": "monthly years={1400: 162333, 1401: 169183, 1402: 183771} (threshold ≥100k), year-aggregated years={1403: 58247, 1404: 52861} (threshold ≥20k — no month split per Issue-006; value completeness verified by tests 1.4/1.5 with zero tolerance)"
+    },
+    {
+      "test": "5.5 No nulls in year",
+      "passed": true,
+      "details": "n_null=0"
+    },
+    {
+      "test": "5.6 No nulls in hs_code",
+      "passed": true,
+      "details": "n_null=0"
+    },
+    {
+      "test": "5.7 No nulls in destination_country_iso2",
+      "passed": true,
+      "details": "n_null=0"
+    },
+    {
+      "test": "5.8 No nulls in export_value_usd",
+      "passed": true,
+      "details": "n_null=0"
+    },
+    {
+      "test": "6.1 HS Code format (HH.HH.HH.HH)",
+      "passed": true,
+      "details": "checked=5993, bad=0"
+    },
+    {
+      "test": "6.2 Country ISO format (XX)",
+      "passed": true,
+      "details": "checked=166, bad=0"
+    },
+    {
+      "test": "6.3 export_value_usd ≥ 0",
+      "passed": true,
+      "details": "n_negative=0"
+    },
+    {
+      "test": "6.4 export_weight_kg ≥ 0",
+      "passed": true,
+      "details": "n_negative=0"
+    },
+    {
+      "test": "7.1 Trend pairs == Classification pairs",
+      "passed": true,
+      "details": "trend=50196, class=50196"
+    },
+    {
+      "test": "7.2 No null trend_category",
+      "passed": true,
+      "details": "n_null=0"
+    },
+    {
+      "test": "7.3 All trend_category values valid",
+      "passed": true,
+      "details": "valid categories=10"
+    },
+    {
+      "test": "7.4 All candidates have score and rank",
+      "passed": true,
+      "details": "null_score=0, null_rank=0"
+    },
+    {
+      "test": "7.5 Ranks unique and no gaps",
+      "passed": true,
+      "details": "min=1, max=574, expected_max=574"
+    },
+    {
+      "test": "7.6 Ranks consistent with export_score ordering",
+      "passed": true,
+      "details": "rank #1 has highest score"
+    },
+    {
+      "test": "7.7 Recalibrated recommendations consistent with percentile thresholds",
+      "passed": true,
+      "details": "select≥0.10335436768886616, monitor≥0.061012351141215074, violations=0"
+    },
+    {
+      "test": "8.1 Excel file exists",
+      "passed": true,
+      "details": "size=0.41MB"
+    },
+    {
+      "test": "8.2 Excel opens without error",
+      "passed": true,
+      "details": "sheets=7"
+    },
+    {
+      "test": "8.3 All expected sheets present",
+      "passed": true,
+      "details": "sheets=['All-Candidates', 'Top-500', 'Select', 'Monitor', 'By-Chapter', 'By-Target-Country', 'Methodology']"
+    },
+    {
+      "test": "8.4 All-Candidates has ≥574 rows",
+      "passed": true,
+      "details": "n_rows=574"
+    },
+    {
+      "test": "8.5 Select sheet has candidates",
+      "passed": true,
+      "details": "n_rows=58 (expected 58)"
+    },
+    {
+      "test": "8.6 Monitor sheet has candidates",
+      "passed": true,
+      "details": "n_rows=172 (expected 172)"
+    },
+    {
+      "test": "8.7 Top-500 sheet has rows",
+      "passed": true,
+      "details": "n_rows=500 (expected min(500, 574)=500)"
+    },
+    {
+      "test": "9.1 Metadata file exists",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "test": "9.2 Issue 005 documented in metadata",
+      "passed": true,
+      "details": "keyword='tccim' found"
+    },
+    {
+      "test": "9.3 Issue 006 documented in metadata",
+      "passed": true,
+      "details": "keyword='month' found"
+    },
+    {
+      "test": "9.4 Issue 007 documented in metadata",
+      "passed": true,
+      "details": "keyword='quantity' found"
+    },
+    {
+      "test": "9.5 Issue 008 documented in metadata",
+      "passed": true,
+      "details": "keyword='1405' found"
+    }
+  ]
+}
