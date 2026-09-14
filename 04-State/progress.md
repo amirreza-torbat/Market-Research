@@ -535,3 +535,40 @@ last_updated: 1405-06-23 12:40
 - State به‌روز شد: STATUS.md (task-06 → review)، این فایل، `01-Tasks/_MOC.md`، `issues.md` (Issue-009)، فایل تسک task-06.
 - commit + push به `origin/feature/task-06-qa`.
 - **نتیجه: گات نهایی قبل از انتشار عبور شد — task-07/08/09 unblocked هستند.**
+
+## [2026-09-14 16:30] task-07 — etl-engineer
+- شروع task-07 — ساخت فایل Excel نهایی با ۱۸ شیت.
+- شاخه `feature/task-07-excel` از `origin/feature/task-06-qa` ساخته شد.
+- داده‌های ورودی بررسی شدند: exports (۶۲۶,۳۹۵ رکورد)، trend (۵۰,۱۹۶ جفت)، classification (۵۰,۱۹۶ جفت)، classification_by_hs (۵,۹۹۳ HS)، candidates (۵۷۴ کاندید).
+- اسکریپت `scripts/build_final_excel.py` نوشته شد با تابع‌های مجز برای هر شیت.
+- ۱۸ شیت به شرح زیر ساخته شد:
+  1. Overview — معرفی + آمار + QA
+  2. Data-All — نمونه ۱۰۰۰ رکورد
+  3. By-Country-Summary — ۱۶۶ کشور
+  4. By-Country-Top20-Growth — Top 20 رشد مطلق
+  5. By-Country-Top20-CAGR — Top 20 CAGR
+  6. By-Tariff-Summary — ۵٬۹۹۳ HS Code (همان ۵٬۹۹۳ + ۸۶۱ که توضیحات تکراری دارند)
+  7. By-Tariff-Top50 — Top 50 HS Code
+  8. By-Tariff-Country — ۲٬۰۴۶ رکورد با رشد قوی/متوسط/نوظهور
+  9. Trend-All-HS-Country — ۵۰٬۱۹۶ جفت
+  10. Trend-Classification — ۵۰٬۱۹۶ جفت با trend_category
+  11. Trend-By-HS-Summary — ۵٬۹۹۳ HS Code تجمیعی
+  12. Export-Candidates-Ranked — ۵۷۴ کاندید
+  13. Candidates-Top20-Detail — Top 20 با ۳۴ ستون
+  14. Chapter-Country-Matrix — ماتریس فصل × ۳۰ کشور برتر
+  15. Charts-Country — نمودار Top 20 کشور
+  16. Charts-Tariff — نمودار Top 20 HS Code
+  17. Charts-Trend-Classification — PieChart توزیع دسته‌ها
+  18. Charts-Export-Candidates — نمودار Top 20 کاندید
+
+## [2026-09-14 16:30] task-07 — etl-engineer (نهایی)
+- ✅ فایل `07-Exports/iran-exports-1400-1405-20260914.xlsx` ساخته شد (۱۲.۵۸ MB، زیر ۵۰ MB limit).
+- ✅ اعتبارسنجی مستقل در `scripts/validate_excel.py` (فایل موقت — خارج از مخزن):
+  - همه ۱۸ شیت موجودند
+  - شیت ۰۹: ۵۰٬۱۹۶ جفت (مطابق انتظار)
+  - شیت ۱۲: ۵۷۴ کاندید (مطابق انتظار)
+  - ۴ نمودار در شیت‌های ۱۵-۱۸
+  - Conditional formatting روی CAGR و export_score
+  - Overview شامل آمار کامل و وضعیت QA (PASS)
+- مشکل اصلاح‌شده:IllegalCharacterError به‌خاطر کاراکتر 0x0B در توضیحات HS (نخ‌های جراحی) — تابع `clean_value` اکنون همه control chars غیرمجاز را حذف می‌کند.
+- آماده review کاربر.

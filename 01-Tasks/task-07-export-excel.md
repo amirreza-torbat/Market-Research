@@ -2,10 +2,10 @@
 type: task
 task_id: task-07
 title: خروجی Excel نهایی (۶ سال + روند + کاندیدها)
-status: pending
+status: review
 assignee: etl-engineer
 created: 1405-06-15
-updated: 1405-06-15
+updated: 1405-06-24
 depends_on: [task-06]
 blocks: [task-09]
 estimated_effort: 1-2 days
