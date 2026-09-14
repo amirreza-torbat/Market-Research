@@ -1,7 +1,7 @@
 ---
 folder: 05-Data
 type: moc
-last_updated: 1405-06-22
+last_updated: 1405-06-23
 ---
 
 # 📦 MOC داده‌ها (Data Map of Content)
@@ -28,6 +28,7 @@ last_updated: 1405-06-22
     ├── trend-analysis-5y.parquet      # ۵۰,۱۹۶ جفت × ۲۱ ستون شاخص روند (task-10)
     ├── trend-analysis-summary.md      # گزارش تحلیل روند ۱۰ بخشی (task-10)
     ├── countries-mapping.csv          # نگاشت نام فارسی → ISO alpha-2
+    ├── export-candidates-ranked-recalibrated.parquet  # ۵۷۴×۳۴ — توصیه‌های صدکی (task-12 بازکالیبره)
     ├── countries.csv
     ├── hs-codes.csv
     ├── _dataset-metadata.json         # schema + issues (task-03)
@@ -46,6 +47,7 @@ last_updated: 1405-06-22
 | تحلیل تعرفه | `processed/analysis-by-tariff*.csv` | Analyst | [[task-05-analysis-tariff]] |
 | طبقه‌بندی روند | `processed/trend-classification*.parquet` | Analyst | [[task-11-trend-classification]] |
 | **رتبه‌بندی کاندیدها** | `processed/export-candidates-ranked.parquet` (۵۷۴ × ۳۱) | Analyst | [[task-12-export-candidates]] |
+| **رتبه‌بندی بازکالیبره (صدکی)** | `processed/export-candidates-ranked-recalibrated.parquet` (۵۷۴ × ۳۴؛ آستانه‌های p90=0.103 / p60=0.061) | Analyst | [[task-12-export-candidates]] |
 
 ## نکات
 

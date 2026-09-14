@@ -1,7 +1,7 @@
 ---
 folder: 07-Exports
 type: moc
-last_updated: 1405-06-15
+last_updated: 1405-06-23
 ---
 
 # 📤 MOC خروجی‌ها (Exports)
@@ -12,10 +12,11 @@ last_updated: 1405-06-15
 
 | فایل | توضیح | تسک |
 |------|-------|-----|
-| `iran-exports-1400-1404-YYYYMMDD.xlsx` | فایل Excel نهایی با ۱۱ شیت | [[task-07-export-excel]] |
+| `iran-export-candidates-500.xlsx` | ✅ **ساخته شد** (۱۴۰۵-۰۶-۲۳) — Excel کاندیدهای صادرات با آستانه‌های صدکی؛ ۷ شیت: All-Candidates (۵۷۴) / Top-500 / Select (۵۸) / Monitor (۱۷۲) / By-Chapter / By-Target-Country / Methodology | [[task-12-export-candidates]] |
+| `iran-exports-1400-1404-YYYYMMDD.xlsx` | فایل Excel جامع نهایی (۱۱+ شیت؛ جدا از فایل کاندیدهای task-12) | [[task-07-export-excel]] |
 | `release-notes.md` | یادداشت‌های release GitHub | [[task-09-publish-github]] |
 
-> ⬜ هنوز هیچ فایلی ساخته نشده.
+> ✅ فایل کاندیدهای task-12 (بازکالیبره) ساخته شد؛ فایل جامع task-07 و release-notes هنوز در انتظار تکمیل تسک‌های مربوطه.
 
 ## شیت‌های Excel نهایی
 

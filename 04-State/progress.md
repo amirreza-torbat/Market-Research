@@ -1,7 +1,7 @@
 ---
 folder: 04-State
 type: progress-log
-last_updated: 1405-06-22 16:20
+last_updated: 1405-06-23 12:40
 ---
 
 # 📝 لاگ پیشرفت (Progress Log)
@@ -513,3 +513,14 @@ last_updated: 1405-06-22 16:20
 - اعتبارسنجی: ۱۴/۱۴ PASS (recipe-09 §۹) + همه یادداشت‌ها سکشن‌های الزامی دارند.
 - commit: `34fe090` + push به `origin/feature/task-12-ranking`.
 - **زنجیره تحلیل پروژه کامل شد** — آماده review → task-06 (QA) → task-07/08 (خروجی‌ها) → task-09 (انتشار).
+
+## [2026-09-14 12:40] task-12 بازکالیبراسیون — analyst (تکمیل)
+
+- **محرک**: ۲ ایراد کاربر — (۱) فقط Top 5 در گزارش اجرایی، (۲) آستانه‌های ثابت 0.4/0.7 خارج از دامنه نمره‌ها [-0.03, 0.35] → همه ۵۷۴ کاندید «investigate».
+- **بازکالیبراسیون صدکی** (شاخه feature/task-12-recalibrate): select ≥ p90=**0.103** → **۵۸** کاندید (۱۰.۱٪)؛ monitor ≥ p60=**0.061** → **۱۷۲** (۳۰.۰٪)؛ investigate → **۳۴۴** (۵۹.۹٪) — مطابق پیش‌بینی ~۵۷/~۱۷۲/~۳۴۵.
+- **Excel ۷ شیتی**: `07-Exports/iran-export-candidates-500.xlsx` (۴۲۱KB) — All-Candidates (۵۷۴×۲۸) / Top-500 / Select / Monitor / By-Chapter (۶۰ فصل) / By-Target-Country (Top 30) / Methodology؛ color-scale روی export_score + رنگ وضعیت توصیه (سبز/کهربایی) + AutoFilter + Freeze + فرمت اعداد.
+- **دقت شیت کشورها**: ارزش واقعی جفت‌های HS×Country از `trend-analysis-5y.parquet` (task-10) — پوشش join ۱۰۰٪ (۱,۲۴۳ جفت)؛ رفع تورش انتساب total_value_1404 کل HS به ۵ کشور.
+- **گزارش اجرایی**: `_executive-ranking.md` بازنویسی — Top 50 (قبلاً Top 20) + جدول آستانه‌های صدکی + تحلیل کیفی Top 5 + Top 10 فصل + چرایی شکست آستانه ثابت.
+- **Parquet**: `export-candidates-ranked-recalibrated.parquet` (۵۷۴×۳۴؛ +recommendation_old/+select_threshold/+monitor_threshold)؛ نمره‌ها و رتبه‌ها دست‌نخورده.
+- **QA**: ۶۰/۶۰ بررسی معنایی PASS (بازمحاسبه مستقل شیت کشورها با صفر مغایرت) + validate/audit/scan ساختاری صفر خطا.
+- commit + push به `origin/feature/task-12-recalibrate`.
