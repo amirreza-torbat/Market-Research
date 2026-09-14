@@ -497,3 +497,19 @@ last_updated: 1405-06-22 16:20
 - محیط: venv بازسازی شده بود → pyarrow/matplotlib نصب مجدد شد.
 - commit: `e20658d` + push به `origin/feature/task-11-classification`.
 - آماده review → سپس task-12 (رتبه‌بندی کاندیدها ⭐ — با فیلتر membership طبق §۱۱ گزارش).
+
+## [2026-09-14 11:30] task-12 — analyst (تکمیل)
+- **تکمیل task-12 — رتبه‌بندی کاندیدهای صادرات ⭐ هدف نهایی پروژه**.
+- شاخه `feature/task-12-ranking` از `origin/feature/task-11-classification` ساخته شد؛ venv بازسازی شد (pandas/pyarrow/matplotlib/seaborn/arabic-reshaper/python-bidi).
+- اسکریپت‌ها: `scripts/rank_export_candidates.py` (فیلتر + نمره‌دهی + ریسک + ۳ گزارش + اعتبارسنجی) و `scripts/build_candidate_notes.py` (۵۰ یادداشت + ۵۰ نمودار).
+- فیلتر membership طبق یافته task-11 §۱۱: ۵,۹۹۳ HS → ۱,۰۴۶ (membership) → ۶۱۴ (حجم>1M$) → **۵۷۴ کاندید** (≥۳ مقصد فعال) در ۶۰ فصل.
+- خروجی داده: `export-candidates-ranked.parquet` (۵۷۴ × ۳۱ ستون، snappy) — rank/export_score/recommendation/risk_flags/trend_category/top_5_countries(+value)/تجزیه ۶ مولفه/n_significant_pairs.
+- نمره‌دهی: وزن‌های Decision-009 (0.30 CAGR/0.20 slope/0.20 حجم/0.10 تنوع/0.10 ثبات/0.10 جریمه cv) + Min-Max؛ **cagr_5y جایگزین cagr_6y (Issue-008)** — مستند در گزارش §۱/§۹.
+- **Top 5**: ۱) گاز طبیعی 27.11.21.90 (نمره 0.349، TR/IQ) ۲) میله‌های فولادی 72.14.99.00 (CAGR ۹۱۲٪) ۳) سنگ آهن هماتیت 26.01.11.90 (CAGR ۱۲۵۰٪) ۴) قیرنفت 27.13.20.00 (۴۷ مقصد) ۵) پروپان 27.11.12.90.
+- **⚠️ یافته کالیبراسیون**: نمره‌ها [-۰.۰۳, ۰.۳۵] (هیچ کاندیدی در همه ۶ بُعد پیشتاز نیست) → آستانه‌های ثابت §۷ (select>0.7/monitor≥0.4) همه را «investigate» می‌کند؛ مستند در `_executive-ranking.md` §۵ + پیشنهاد بازکالیبراسیون با re-run (Pending-003/004). رتبه‌بندی خودش سیگنال قابل‌اقدام است.
+- ریسک‌ها: volatile همه (cv جفت‌ها با صفر-پرکردن متورم) + concentrated ۱۷۹ + declining_recent ۳۶۸.
+- گزارش‌ها: `_executive-ranking.md` (۹ بخش + نمودار Top 20) + `by-target-country.md` (۱۰۵ کشور؛ TR/IQ/AE/OM/CN صدر) + `chapter-country-matrix.md` + heatmap (فصل‌های ۲۷/۲۶/۳۹؛ AF پرتنوع ۶۳ جفت).
+- ۵۰ یادداشت تفصیلی rank-NN-hs-*.md (خلاصه/شاخص‌ها/روند aggregated/تجزیه نمره/نمودار ۲پنلی/جدول ۵ ساله Top 15/تحلیل کیفی ۲۰۰+ کلمه/توصیه‌ها) + ۵۰ نمودار PNG فارسی (arabic_reshaper + bidi + DejaVu Sans).
+- اعتبارسنجی: ۱۴/۱۴ PASS (recipe-09 §۹) + همه یادداشت‌ها سکشن‌های الزامی دارند.
+- commit: `34fe090` + push به `origin/feature/task-12-ranking`.
+- **زنجیره تحلیل پروژه کامل شد** — آماده review → task-06 (QA) → task-07/08 (خروجی‌ها) → task-09 (انتشار).

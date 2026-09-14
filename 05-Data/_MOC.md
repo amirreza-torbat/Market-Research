@@ -44,8 +44,8 @@ last_updated: 1405-06-22
 | **تحلیل روند جامع** | `processed/trend-analysis-5y.parquet` | Analyst | [[task-10-trend-analysis]] |
 | تحلیل کشور | `processed/analysis-by-country.csv` | Analyst | [[task-04-analysis-country]] |
 | تحلیل تعرفه | `processed/analysis-by-tariff*.csv` | Analyst | [[task-05-analysis-tariff]] |
-| طبقه‌بندی روند | `processed/trend-classification*.parquet` | Analyst | [[task-11-trend-classification]] (آینده) |
-| رتبه‌بندی کاندیداها | `processed/export-candidates-ranked.parquet` | Analyst | [[task-12-export-candidates]] (آینده) |
+| طبقه‌بندی روند | `processed/trend-classification*.parquet` | Analyst | [[task-11-trend-classification]] |
+| **رتبه‌بندی کاندیدها** | `processed/export-candidates-ranked.parquet` (۵۷۴ × ۳۱) | Analyst | [[task-12-export-candidates]] |
 
 ## نکات
 

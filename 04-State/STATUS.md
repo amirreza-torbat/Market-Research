@@ -1,7 +1,7 @@
 ---
 folder: 04-State
 type: status
-last_updated: 2026-09-14 09:30 (1405-06-23)
+last_updated: 2026-09-14 11:30 (1405-06-23)
 ---
 
 # 📊 وضعیت پروژه (STATUS)
@@ -12,12 +12,12 @@ last_updated: 2026-09-14 09:30 (1405-06-23)
 
 | فیلد | مقدار |
 |------|-------|
-| **وضعیت کلی** | 🟡 `in-progress` (task-12) |
-| **تسک فعلی** | `task-12` — رتبه‌بندی کاندیدهای صادرات ⭐ هدف نهایی پروژه |
-| **agent مسئول فعلی** | `analyst` |
+| **وضعیت کلی** | 🟠 `review` (برای task-12) |
+| **تسک فعلی** | `task-12` — رتبه‌بندی کاندیدهای صادرات ⭐ هدف نهایی — تکمیل شد، منتظر review کاربر |
+| **agent مسئول فعلی** | `analyst` (کار تمام) → قدم بعد: QA (task-06) |
 | **آخرین به‌روزرسانی** | 1405-06-23 (2026-09-14) |
-| **بلوک‌ها** | داده ۱۴۰۵ هنوز در منبع منتشر نشده (Issue-007/008) — تحلیل روی ۵ سال کامل انجام می‌شود |
-| **قدم بعدی** | تکمیل task-12 → review کاربر → task-06 (QA) |
+| **بلوک‌ها** | داده ۱۴۰۵ هنوز در منبع منتشر نشده (Issue-007/008) — تحلیل روی ۵ سال کامل انجام شد |
+| **قدم بعدی** | review خروجی task-12 → شروع `task-06` (اعتبارسنجی QA) — بعد از آن task-07/08 (خروجی‌ها) و task-09 (انتشار) |
 
 ## 📋 وضعیت تسک‌ها
 
@@ -31,7 +31,7 @@ last_updated: 2026-09-14 09:30 (1405-06-23)
 | `task-05` | تحلیل به تفکیک تعرفه (Top 50) | ⬜ `pending` | — | — |
 | **`task-10`** | **تحلیل جامع روند (تمام HS×تمام کشورها)** | 🟠 `review` | analyst | 1405-06-22 |
 | **`task-11`** | **طبقه‌بندی روند + اعتبارسنجی آماری** | 🟠 `review` | analyst | 1405-06-22 |
-| **`task-12`** | **رتبه‌بندی کاندیدهای صادرات** | 🟡 `in-progress` | analyst | 1405-06-23 |
+| **`task-12`** | **رتبه‌بندی کاندیدهای صادرات** | 🟠 `review` | analyst | 1405-06-23 |
 | `task-06` | اعتبارسنجی QA | ⬜ `pending` | — | — |
 | `task-07` | خروجی Excel (۱۸ شیت) | ⬜ `pending` | — | — |
 | `task-08` | خروجی Obsidian | ⬜ `pending` | — | — |
@@ -70,6 +70,17 @@ last_updated: 2026-09-14 09:30 (1405-06-23)
                 ↓
        [task-09: publish-github]
 ```
+
+## 🆕 تغییرات اخیر (۱۴۰۵-۰۶-۲۳ — task-12 توسط analyst)
+
+1. **رتبه‌بندی کاندیدهای صادرات (هدف نهایی پروژه) تکمیل شد**: از ۵,۹۹۳ HS Code → فیلتر membership (حداقل یک جفت strong/moderate/emerging طبق یافته task-11) → ۱,۰۴۶ → با فیلترهای recipe-09 §۶ (mean_recent_3y > 1M$ و n_destinations_active ≥ 3) → **۵۷۴ کاندید نهایی** در ۶۰ فصل HS — `export-candidates-ranked.parquet` (۵۷۴ × ۳۱ ستون).
+2. **نمره‌دهی**: `export_score` با وزن‌های Decision-009 (0.30/0.20/0.20/0.10/0.10/0.10) و Min-Max؛ **cagr_5y جایگزین cagr_6y** (Issue-008 — مستند در گزارش §۱/§۹)؛ ستون اطلاعاتی `n_significant_pairs` برای هشدار MK (n=5, min p≈0.0275) بدون تغییر وزن‌ها.
+3. **رتبه‌بندی معنادار**: رتبه ۱ گاز طبیعی (27.11.21.90 — TR/IQ)، ۲ میله‌های فولادی (CAGR ۹۱۲٪)، ۳ سنگ آهن هماتیت (CAGR ۱۲۵۰٪)، ۴ قیرنفت (۴۷ مقصد)، ۵ پروپان، ۸ اوره، ۱۱ پسته...
+4. **⚠️ یافته کالیبراسیون**: نمره‌ها در بازه [-۰.۰۳, ۰.۳۵] فشرده‌اند (هیچ کاندیدی در همه ۶ بُعد هم‌زمان پیشتاز نیست) → آستانه‌های ثابت recipe-09 §۷ (select>0.7/monitor≥0.4) به همه «investigate» می‌رسد؛ مستند در `_executive-ranking.md` §۵ + پیشنهاد بازکالیبراسیون (مثلاً select ≥ 0.25) با re-run در صورت تأیید کاربر (Pending-003/004).
+5. **ریسک‌ها**: volatile (همه — cv جفت‌ها با صفر-پرکردن متورم است)، concentrated ۱۷۹، declining_recent ۳۶۸.
+6. **خروجی‌های گزارشی**: `_executive-ranking.md` (Top 20 + نمودار میله‌ای + توزیع) + `by-target-country.md` (۱۰۵ کشور؛ TR ۳.۴B$ / IQ ۲.۸B$ / AE / OM / CN در صدر) + `chapter-country-matrix.md` + heatmap (فصل‌های ۲۷/۲۶/۳۹ پرپتانسیل؛ AF با ۶۳ جفت رشد قوی پرتنوع‌ترین مقصد) + **۵۰ یادداشت تفصیلی + ۵۰ نمودار** (rank-NN-hs-*.md).
+7. **اعتبارسنجی**: ۱۴/۱۴ بررسی PASS (recipe-09 §۹) — تعداد/نمره/رتبه یکتا/ترتیب/بازه تئوری/جمع مولفه‌ها/فیلترها/سازگاری جمع با task-11.
+8. **زنجیره تحلیل کامل شد**: scrape (626,395) → ETL → task-10 (50,196 جفت × ۱۳ شاخص) → task-11 (طبقه‌بندی) → task-12 (رتبه‌بندی ⭐). آماده task-06 (QA) و task-07/08 (خروجی‌ها).
 
 ## 🆕 تغییرات اخیر (۱۴۰۵-۰۶-۲۲ — task-11 توسط analyst)
 
@@ -148,24 +159,13 @@ last_updated: 2026-09-14 09:30 (1405-06-23)
 - ✅ جداول مرجع countries.csv و hs-codes.csv ساخته شد.
 - ادامه کار: پس از افزودن داده ۱۴۰۵ (وقتی در منبع منتشر شد)، کافی است `python scripts/scrape_customs.py detail --years 1405 && python scripts/etl_normalize.py` اجرا شود.
 
-### برای Analyst (task-04 / task-05 / task-12):
-- داده آماده در `05-Data/processed/exports_1400-1405.parquet`.
-- **خروجی task-10 آماده است**: `05-Data/processed/trend-analysis-5y.parquet` (۵۰,۱۹۶ جفت × ۲۱ ستون) + `trend-analysis-summary.md`.
-- **خروجی task-11 آماده است**: `trend-classification.parquet` (۵۰,۱۹۶ × ۲۵) + `trend-classification-by-hs.parquet` (۵,۹۹۳ × ۲۶) + ۱۰۸ یادداشت در `06-Analysis/trend/`.
-- Schema در `_dataset-metadata.json`.
-- **محدودیت مهم (Issue-006)**: تحلیل‌های ماهانه فقط روی ۱۴۰۰-۱۴۰۲ قابل اجراست. برای ۱۴۰۳/۱۴۰۴ فقط تحلیل سالانه.
-- **محدودیت (Issue-008)**: ۱۴۰۵ در داده نیست. CAGR ۵ ساله (۱۴۰۰-۱۴۰۴) حساب شد؛ `cagr_6y` NULL.
-- **هشدار آماری (task-11)**: با n=5 حداقل p-value ممکن در MK ≈ 0.0275 است؛ معیار p<0.05 عملاً یعنی سری کاملاً یکنواخت. MK را در کنار CAGR/R²/ثبات تفسیر کن.
+### برای Analyst (task-04 / task-05) — task-12 ✅ انجام شد:
+- ~~فیلتر membership + وزن‌های Decision-009~~ → `export-candidates-ranked.parquet` (۵۷۴ کاندید × ۳۱ ستون) + `_executive-ranking.md` + `by-target-country.md` + `chapter-country-matrix.md` + ۵۰ یادداشت در `06-Analysis/export-candidates/`.
+- ادامه کار: در صورت تأیید کاربر، بازکالیبراسیون آستانه‌های توصیه (§۵ گزارش اجرایی) با re-run؛ پس از انتشار داده ۱۴۰۵، به‌روزرسانی کامل زنجیره (task-01 → 03 → 10 → 11 → 12).
 - `task-04`: تحلیل به تفکیک کشور روی ۱۶۶ کشور (شامل کدهای user-assigned XO/ZF/ZS/ZZ).
 - `task-05`: تحلیل به تفکیک تعرفه روی ۵۹۹۳ HS Code.
-- `task-12`: فیلتر اولیه = **membership** (`n_strong + n_moderate + n_emerging > 0`؛ نه dominant_trend — ۹۲.۷٪ HSها غالب insufficient_data هستند)؛ سپس فیلترهای recipe-09 §۶ (mean_recent_3y > 1M$ و n_destinations_active ≥ 3)؛ نمره‌دهی با وزن‌های Decision-009 و `is_significant` به‌عنوان وزن کمکی.
-- `task-12`: نمره‌دهی با وزن‌های Decision-009.
-- برای خواندن Parquet:
-  ```python
-  import pyarrow.parquet as pq
-  df = pq.read_table('05-Data/processed/exports_1400-1405.parquet').to_pandas()
-  # export_value_usd / export_value_rial / export_weight_kg به‌صورت Decimal
-  ```
+- داده خام در `05-Data/processed/exports_1400-1405.parquet` (Schema در `_dataset-metadata.json`؛ خواندن با pyarrow — مقادیر به‌صورت Decimal).
+- **محدودیت (Issue-006)**: تحلیل ماهانه فقط روی ۱۴۰۰-۱۴۰۲؛ **(Issue-008)**: ۱۴۰۵ نیست، `cagr_6y` → NULL؛ **هشدار MK (n=5, min p≈0.0275)**: `is_significant` را در کنار CAGR/R²/ثبات تفسیر کنید.
 
 ### برای همه agentها:
 - قبل از شروع، این فایل را بخوان.

@@ -2,10 +2,10 @@
 type: task
 task_id: task-12
 title: رتبه‌بندی محصولات کاندید صادرات
-status: pending
+status: review
 assignee: analyst
 created: 1405-06-15
-updated: 1405-06-15
+updated: 1405-06-23
 depends_on: [task-11]
 blocks: [task-06, task-08]
 estimated_effort: 2 days
@@ -134,14 +134,18 @@ export_score = w1 * norm(cagr_6y)
 - نمودار heatmap (PNG).
 
 ## ✅ معیارهای پذیرش (Acceptance Criteria)
-- [ ] فایل `05-Data/processed/export-candidates-ranked.parquet` ساخته شود.
-- [ ] حداقل ۱۰۰ رکورد در آن (پس از فیلتر).
-- [ ] همه رکوردها نمره و رتبه داشته باشند.
-- [ ] فایل `06-Analysis/export-candidates/_executive-ranking.md` (با Top 20).
-- [ ] ۵۰ یادداشت تفصیلی در `06-Analysis/export-candidates/`.
-- [ ] گزارش `by-target-country.md` کامل.
-- [ ] ماتریس `chapter-country-matrix.md` با نمودار heatmap.
-- [ ] commit با پیام `analysis(ranking): task-12 export candidate ranking`.
+- [x] فایل `05-Data/processed/export-candidates-ranked.parquet` ساخته شود. (۵۷۴ × ۳۱ ستون)
+- [x] حداقل ۱۰۰ رکورد در آن (پس از فیلتر). (۵۷۴ کاندید)
+- [x] همه رکوردها نمره و رتبه داشته باشند. (۱۴/۱۴ اعتبارسنجی PASS)
+- [x] فایل `06-Analysis/export-candidates/_executive-ranking.md` (با Top 20). (+ نمودار میله‌ای Top 20)
+- [x] ۵۰ یادداشت تفصیلی در `06-Analysis/export-candidates/`. (۵۰ یادداشت + ۵۰ نمودار)
+- [x] گزارش `by-target-country.md` کامل. (۱۰۵ کشور، Top 30 + Top 10 HS هر کشور)
+- [x] ماتریس `chapter-country-matrix.md` با نمودار heatmap. (heatmap ۵۲×۳۰)
+- [x] commit با پیام `analysis(ranking): task-12 export candidate ranking`. (`34fe090`)
+- [x] تطابق Issue-008 (cagr_5y به‌جای cagr_6y) و روش membership مستند شد (گزارش §۱ و §۹).
+- [x] push به شاخه `feature/task-12-ranking`.
+
+> **یادداشت تکمیل (۱۴۰۵-۰۶-۲۳)**: نمره‌ها در بازه [-۰.۰۳, ۰.۳۵] فشرده‌اند (هیچ کاندیدی در همه ۶ بُعد هم‌زمان پیشتاز نیست)؛ در نتیجه آستانه‌های ثابت §۷ توصیه (select>0.7/monitor≥0.4) به همه «investigate» می‌رسد. این یافته + پیشنهاد بازکالیبراسیون در `_executive-ranking.md` §۵ مستند شد؛ سیگنال قابل‌اقدام رتبه‌بندی (۱..۵۷۴) و یادداشت‌های Top 50 است. ستون `cagr_6y_aggregated` طبق Issue-008 با نام `cagr_5y_aggregated` ذخیره شد.
 
 ## 📦 خروجی‌ها
 - `05-Data/processed/export-candidates-ranked.parquet`
