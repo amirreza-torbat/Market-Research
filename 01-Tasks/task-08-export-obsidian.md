@@ -2,10 +2,10 @@
 type: task
 task_id: task-08
 title: خروجی یادداشت‌های Obsidian
-status: pending
+status: in-progress
 assignee: vault-writer
 created: 1405-06-15
-updated: 1405-06-15
+updated: 1405-06-25
 depends_on: [task-06]
 blocks: [task-09]
 estimated_effort: 1 day

@@ -1,7 +1,7 @@
 ---
 folder: 06-Analysis/trend
 type: moc
-last_updated: 1405-06-22
+last_updated: 1405-06-25
 status: review
 ---
 
@@ -45,6 +45,15 @@ status: review
 | کاهشی | `declining` | CAGR < 0، MK p < 0.1 |
 | نوظهور | `emerging` | value_start = 0، value_end > threshold |
 | محوشده | `disappearing` | value_start > threshold، value_end ≈ 0 |
+
+## گزارش‌های مرتبط (task-08)
+
+این پوشه در گزارش‌های نهایی پروژه تحلیل شده است — برای مطالعه منسجم از این‌ها شروع کنید:
+
+- [[../executive-summary]] — خلاصه اجرایی (بخش ۴.۲ تعرفه‌ها و ۴.۵ الگوهای محصولی از همین داده‌ها ساخته شده)
+- [[../key-findings]] — یافته‌های ۱ تا ۳ مستقیماً از یادداشت‌های این پوشه ارجاع می‌گیرند
+- [[../methodology]] — تعریف شاخص‌ها، آستانه‌ها و فیلتر membership
+- [[../_index]] — ایندکس کامل درختی
 
 ## مراجع
 - [[task-10-trend-analysis]]
