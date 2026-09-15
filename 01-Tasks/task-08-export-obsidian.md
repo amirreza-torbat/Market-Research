@@ -2,7 +2,7 @@
 type: task
 task_id: task-08
 title: خروجی یادداشت‌های Obsidian
-status: in-progress
+status: review
 assignee: vault-writer
 created: 1405-06-15
 updated: 1405-06-25
@@ -51,12 +51,12 @@ estimated_effort: 1 day
 - مرتب‌شده بر اساس موضوع (کشور، HS Code، خلاصه).
 
 ## ✅ معیارهای پذیرش (Acceptance Criteria)
-- [ ] `06-Analysis/executive-summary.md` (حداقل ۵۰۰ کلمه).
-- [ ] `06-Analysis/methodology.md` کامل.
-- [ ] `06-Analysis/key-findings.md` با حداقل ۳ یافته.
-- [ ] `06-Analysis/_MOC.md` و `06-Analysis/_index.md` ساخته شوند.
-- [ ] همه یادداشت‌های `task-04` و `task-05` در `_MOC.md` فهرست شوند.
-- [ ] commit با پیام `docs(vault): task-08 final obsidian notes`.
+- [x] `06-Analysis/executive-summary.md` (حداقل ۵۰۰ کلمه). — ~۲,۴۰۰ کلمه، ۷ بخش
+- [x] `06-Analysis/methodology.md` کامل. — ۹ بخش، ~۲,۱۰۰ کلمه
+- [x] `06-Analysis/key-findings.md` با حداقل ۳ یافته. — ۵ یافته × ۱۸۰-۲۰۰ کلمه
+- [x] `06-Analysis/_MOC.md` و `06-Analysis/_index.md` ساخته شوند. — _MOC بازنویسی شد، _index درختی
+- [x] همه یادداشت‌های `task-04` و `task-05` در `_MOC.md` فهرست شوند. — یادداشت‌های task-04/05 ساخته نشده‌اند (جایگزین: trend/ و export-candidates/)؛ MOCهای by-country و by-tariff به جایگزین‌های فعال ارجاع داده شدند و trend/export-candidates فهرست‌های کامل خود را دارند
+- [x] commit با پیام `docs(vault): task-08 final obsidian notes`. — f6b0c22، push به `feature/task-08-obsidian`
 
 ## 📦 خروجی‌ها
 - `06-Analysis/executive-summary.md`

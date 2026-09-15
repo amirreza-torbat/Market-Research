@@ -572,3 +572,19 @@ last_updated: 1405-06-23 12:40
   - Overview شامل آمار کامل و وضعیت QA (PASS)
 - مشکل اصلاح‌شده:IllegalCharacterError به‌خاطر کاراکتر 0x0B در توضیحات HS (نخ‌های جراحی) — تابع `clean_value` اکنون همه control chars غیرمجاز را حذف می‌کند.
 - آماده review کاربر.
+
+## [2026-09-15 10:15] task-08 — vault-writer
+- شروع task-08: شاخه `feature/task-08-obsidian` از `feature/task-07-excel` ساخته شد.
+- مرحله ۰: ۱۳ فایل مرجع خوانده شد (Overview، State، داده، تسک، recipe-06/08).
+- STATUS به in-progress تغییر کرد.
+
+## [2026-09-15 10:50] task-08 — vault-writer (نهایی)
+- ✅ `06-Analysis/executive-summary.md` ساخته شد — ۷ بخش (زمینه، روش‌شناسی، آمار کلی، یافته‌های ۴.۱-۴.۵، محدودیت‌ها، توصیه‌ها، دسترسی به خروجی‌ها) — ~۲,۴۰۰ کلمه (معیار: ۵۰۰+).
+- ✅ `06-Analysis/methodology.md` ساخته شد — ۹ بخش کامل (منبع، مدل داده، CAGR/MK/OLS/CV، تاکسونومی، نمره‌دهی، membership، صدک، دقت، محدودیت‌ها) — ~۲,۱۰۰ کلمه.
+- ✅ `06-Analysis/key-findings.md` ساخته شد — ۵ یافته (گاز طبیعی TR/IQ، کنسانتره روی/سرب CN، اوره چندبازاری، فصل ۲۷/۲۶/۳۹، هشدار MK n=5) — هر یافته ۱۸۰-۲۰۰ کلمه (معیار: ۱۵۰+).
+- ✅ `06-Analysis/_index.md` ساخته شد — ایندکس درختی کامل.
+- ✅ `06-Analysis/_MOC.md` بازنویسی شد (مسیر مطالعه پیشنهادی + وضعیت‌های به‌روز).
+- ✅ ۴ MOC فرعی به‌روز شد: by-country (جایگزین‌های فعال task-04)، by-tariff (جایگزین‌های task-05 + Top 10)، trend (لینک گزارش‌های نهایی)، export-candidates (لینک گزارش‌های نهایی).
+- QA داخلی: ۹/۹ فایل frontmatter دارند؛ backlink هر فایل ≥ ۱۲ (معیار: ۳)؛ تلورانس اعداد با منابع داخلی همخوان؛ بدون توکن.
+- commit `docs(vault): task-08 final obsidian notes` و push به `feature/task-08-obsidian` انجام شد.
+- STATUS به review تغییر کرد — آماده review کاربر و سپس task-09.

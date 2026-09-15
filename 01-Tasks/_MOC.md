@@ -1,7 +1,7 @@
 ---
 folder: 01-Tasks
 type: moc
-last_updated: 1405-06-24
+last_updated: 1405-06-25
 ---
 
 # 🗺️ MOC تسک‌ها (Tasks Map of Content)
@@ -35,7 +35,7 @@ last_updated: 1405-06-24
                 ↓
    ┌────────────┴────────────┐
    ↓                          ↓
-[task-07: export-excel]  🟠 review (18-sheet Excel, 12.58 MB) | [task-08: export-obsidian]
+[task-07: export-excel]  🟠 review (18-sheet Excel, 12.58 MB) | [task-08: export-obsidian]  🟠 review (3 گزارش نهایی + _index + 5 MOC)
    ↓                          ↓
    └────────────┬─────────────┘
                 ↓
@@ -59,7 +59,7 @@ last_updated: 1405-06-24
 | **`task-12`** | **رتبه‌بندی کاندیدهای صادرات** | 🟠 review | [task-12-export-candidates.md](task-12-export-candidates.md) | `task-11` | Analyst |
 | `task-06` | اعتبارسنجی دقت < 0.0001٪ | 🟠 review | [task-06-qa-validate.md](task-06-qa-validate.md) | `task-10,11,12` | QA Validator |
 | `task-07` | خروجی Excel (۱۸ شیت) | 🟠 review | [task-07-export-excel.md](task-07-export-excel.md) | `task-06` | ETL Engineer |
-| `task-08` | خروجی Obsidian notes | ⬜ pending | [task-08-export-obsidian.md](task-08-export-obsidian.md) | `task-06` | Vault Writer |
+| `task-08` | خروجی Obsidian notes | 🟠 review | [task-08-export-obsidian.md](task-08-export-obsidian.md) | `task-06` | Vault Writer |
 | `task-09` | انتشار در GitHub | ⬜ pending | [task-09-publish-github.md](task-09-publish-github.md) | `task-07,08` | Git Publisher |
 
 **راهنمای وضعیت**: `pending` → `in-progress` → `review` → `done` | `blocked`

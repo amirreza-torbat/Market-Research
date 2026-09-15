@@ -1,7 +1,7 @@
 ---
 folder: 04-State
 type: status
-last_updated: 2026-09-15 10:15 (1405-06-25)
+last_updated: 2026-09-15 11:05 (1405-06-25)
 ---
 
 # 📊 وضعیت پروژه (STATUS)
@@ -12,12 +12,12 @@ last_updated: 2026-09-15 10:15 (1405-06-25)
 
 | فیلد | مقدار |
 |------|-------|
-| **وضعیت کلی** | 🟡 `in-progress` (برای task-08 — ساخت گزارش‌های نهایی Obsidian) |
-| **تسک فعلی** | `task-08` — vault-writer شاخه `feature/task-08-obsidian` را ساخت و در حال نگارش گزارش‌های نهایی است |
-| **agent مسئول فعلی** | `vault-writer` |
+| **وضعیت کلی** | 🟠 `review` (برای task-08 — گزارش‌های نهایی Obsidian ساخته شد) |
+| **تسک فعلی** | `task-08` — ۳ گزارش اصلی (executive-summary / methodology / key-findings) + _index + ۵ MOC به‌روز شد — منتظر review کاربر |
+| **agent مسئول فعلی** | `vault-writer` (کار تمام) → قدم بعد: task-09 (انتشار GitHub) |
 | **آخرین به‌روزرسانی** | 1405-06-25 (2026-09-15) |
 | **بلوک‌ها** | داده ۱۴۰۵ هنوز در منبع منتشر نشده (Issue-007/008) — تحلیل روی ۵ سال کامل انجام شد |
-| **قدم بعدی** | اتمام task-08 (گزارش اجرایی + روش‌شناسی + یافته‌های کلیدی + MOCها) → سپس `task-09` (انتشار) |
+| **قدم بعدی** | review گزارش‌های Obsidian (`06-Analysis/executive-summary.md` و …) → merge PR شاخه `feature/task-08-obsidian` → `task-09` (انتشار) |
 
 ## 📋 وضعیت تسک‌ها
 
@@ -34,7 +34,7 @@ last_updated: 2026-09-15 10:15 (1405-06-25)
 | **`task-12`** | **رتبه‌بندی کاندیدهای صادرات + بازکالیبراسیون** | 🟠 `review` | analyst | 1405-06-23 |
 | `task-06` | اعتبارسنجی QA | 🟠 `review` | qa-validator | 1405-06-23 |
 | `task-07` | خروجی Excel (۱۸ شیت) | 🟠 `review` | etl-engineer | 1405-06-24 |
-| `task-08` | خروجی Obsidian | 🟡 `in-progress` | vault-writer | 1405-06-25 |
+| `task-08` | خروجی Obsidian | 🟠 `review` | vault-writer | 1405-06-25 |
 | `task-09` | انتشار GitHub | ⬜ `pending` | — | — |
 
 **راهنما**: ⬜ pending → 🟡 in-progress → 🟠 review → 🟢 done | 🔴 blocked
@@ -70,6 +70,18 @@ last_updated: 2026-09-15 10:15 (1405-06-25)
                 ↓
        [task-09: publish-github]
 ```
+
+## 🆕 تغییرات اخیر (۱۴۰۵-۰۶-۲۵ — task-08 توسط vault-writer)
+
+1. **گزارش‌های نهایی Obsidian ساخته شد** (شاخه `feature/task-08-obsidian`، base: `feature/task-07-excel`):
+   - `06-Analysis/executive-summary.md` — خلاصه اجرایی (۷ بخش: زمینه، روش‌شناسی، آمار کلی، یافته‌ها ۴.۱-۴.۵، محدودیت‌ها، توصیه‌ها، دسترسی به خروجی‌ها؛ ~۲,۴۰۰ کلمه).
+   - `06-Analysis/methodology.md` — روش‌شناسی (۹ بخش: منبع، مدل داده، شاخص‌های CAGR/MK/OLS/CV، تاکسونومی ۷+۳ دسته، نمره‌دهی Decision-009، فیلتر membership، صدک‌ها، دقت Decimal، محدودیت‌ها؛ ~۲,۱۰۰ کلمه).
+   - `06-Analysis/key-findings.md` — ۵ یافته کلیدی (گاز طبیعی به TR/IQ؛ کنسانتره روی/سرب به CN؛ اوره چندبازاری؛ فصل ۲۷/۲۶/۳۹؛ هشدار MK n=5) هرکدام ۱۸۰-۲۰۰ کلمه با backlink.
+   - `06-Analysis/_index.md` — ایندکس درختی کامل (گزارش‌ها، روند، کاندیدها، داده، State).
+   - به‌روزرسانی `06-Analysis/_MOC.md` + ۴ MOC فرعی (by-country، by-tariff، trend، export-candidates).
+2. **QA داخلی یادداشت‌ها**: همه ۹ فایل frontmatter دارند؛ هر یادداشت ≥۳ backlink (بازه ۱۲ تا ۶۰)؛ تلورانس عددی با منابع داخلی همخوان؛ هیچ توکنی در فایل‌ها نیست.
+3. **خروجی‌های Excel بدون تغییر** — این تسک فقط Vault را به‌روز کرد.
+4. **نتیجه**: آماده review و سپس `task-09` (انتشار).
 
 ## 🆕 تغییرات اخیر (۱۴۰۵-۰۶-۲۳ — task-06 توسط qa-validator)
 
